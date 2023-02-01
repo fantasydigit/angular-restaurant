@@ -1,0 +1,7 @@
+{
+    "/instaorder/api": {
+        "target": "http://13.212.83.32:8080",
+        "secure": false,
+        "logLevel": "debug"
+    }
+}
