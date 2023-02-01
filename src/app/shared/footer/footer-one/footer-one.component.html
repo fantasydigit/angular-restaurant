@@ -1,0 +1,142 @@
+<!--footer section -->
+<footer [class]="class">
+	<div class="light-layout" *ngIf="newsletter">
+		<div class="container">
+			<section class="small-section border-section border-top-0">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="subscribe">
+							<div>
+								<h4>{{ "KNOW_IT_ALL_FIRST!" | translate }}</h4>
+								<p>{{ "Never_Miss_Anything_From_Multikart_By_Signing_Up_To_Our_Newsletter." | translate }}</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<form class="form-inline subscribe-form" action="https://pixelstrap.us19.list-manage.com/subscribe/post?u=5a128856334b598b395f1fc9b&amp;id=082f74cbda" target="_blank" method="post">
+							<div class="form-group mx-sm-3">
+								<input type="email" #name name="EMAIL" id="mce-EMAIL" class="form-control" placeholder="Enter your email">
+							</div>
+							<button type="submit" class="btn btn-solid">{{ "SUBSCRIBE" | translate }}</button>
+						</form>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+	<section class="section-b-space light-layout">
+		<div class="container">
+			<div class="row footer-theme partition-f">
+				<div class="col-lg-4 col-md-6">
+					<div class="footer-title footer-mobile-title">
+						<h4>{{ "ABOUT" | translate }}</h4>
+					</div>
+					<div class="footer-contant">
+						<div class="footer-logo">
+							<img [src]="themeLogo" alt="logo">
+						</div>
+						<p>{{ "Message4" | translate }} </p>
+						<div class="footer-social">
+                            <ul>
+                                <li>
+                                    <a href="javascript:void(0)"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><i class="fa fa-google-plus" aria-hidden="true"></i></a>                 
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><i class="fa fa-rss" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+					</div>
+				</div>
+				<div class="col offset-xl-1">
+					<div class="sub-title">
+						<div class="footer-title">
+                            <h4>{{ "CATEGORIES" | translate }}</h4>
+                        </div>
+                        <div class="footer-contant">
+                            <ul>
+                                <li><a href="javascript:void(0)">{{ "WOMANS_FASHION" | translate }}</a></li>
+                                <li><a href="javascript:void(0)">{{ "MENS_FASHION" | translate }}</a></li>
+                                <li><a href="javascript:void(0)">{{ "KIDS_FASHION" | translate }}</a></li>
+                                <li><a href="javascript:void(0)">{{ "FEATURED" | translate }}</a></li>
+                            </ul>
+                        </div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="sub-title">
+						<div class="footer-title">
+                            <h4>{{ "WHY_WE_CHOOSE" | translate }}</h4>
+                        </div>
+                        <div class="footer-contant">
+                            <ul>
+                                <li><a href="javascript:void(0)">{{ "SHIPPING_&_RETURN" | translate }}</a></li>
+                                <li><a href="javascript:void(0)">{{ "SECURE_SHOPPING" | translate }}</a></li>
+                                <li><a href="javascript:void(0)">{{ "GALLARY" | translate }}</a></li>
+                                <li><a href="javascript:void(0)">{{ "AFFILIATES" | translate }}</a></li>
+                                <li><a href="javascript:void(0)">{{ "CONTACTS" | translate }}</a></li>
+                            </ul>
+                        </div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="sub-title">
+						<div class="footer-title">
+						    <h4>{{ "STORE_INFORMATION" | translate }}</h4>
+						</div>
+						<div class="footer-contant">
+						    <ul class="contact-list">
+						        <li><i class="fa fa-map-marker"></i>{{ "Multikart_Demo_Store,_Demo_store_India" | translate }} 345-659</li>
+						        <li><i class="fa fa-phone"></i>{{ "CALL_US" | translate }}: 123-456-7898</li>
+						        <li><i class="fa fa-envelope-o"></i>{{ "EMAIL_US" | translate }}: <a>Support@Fiot.com</a></li>
+						        <li><i class="fa fa-fax"></i>{{ "FAX" | translate }}: 123456</li>
+						    </ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div class="sub-footer">
+		<div class="container">
+			<div class="row">
+                <div class="col-xl-6 col-md-6 col-sm-12">
+                  <div class="footer-end">
+                    <p><i class="fa fa-copyright" aria-hidden="true"></i> {{ today | date:'y'}} {{ "THEMEFOREST_POWERED_BY_PIXELSTRAP" | translate }}</p>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-12">
+                  <div class="payment-card-bottom">
+                    <ul>
+                      <li>
+                        <a><img src="assets/images/icon/visa.png" alt=""></a>
+                      </li>
+                      <li>
+                        <a><img src="assets/images/icon/mastercard.png" alt=""></a>
+                      </li>
+                      <li>
+                        <a><img src="assets/images/icon/paypal.png" alt=""></a>
+                      </li>
+                      <li>
+                        <a><img src="assets/images/icon/american-express.png" alt=""></a>
+                      </li>
+                      <li>
+                        <a><img src="assets/images/icon/discover.png" alt=""></a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+		</div>
+	</div>
+</footer>
+<!--footer section end -->

@@ -1,0 +1,144 @@
+<!-- <app-header-one [sticky]="true"></app-header-one> -->
+<!-- breadcrumb start -->
+<app-breadcrumb [title]="'404 page'" [breadcrumb]="'404 page'" *ngIf="paymentStatus && paymentStatus !== '100'"></app-breadcrumb>
+<!-- breadcrumb End -->
+
+<!-- section start -->
+<section class="p-0" *ngIf="paymentStatus && paymentStatus !=='100'">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="error-section">
+                    <h1>404</h1>
+                    <h2>{{'PAGE_NOT_FOUND' | translate}}</h2>
+                    <a [routerLink]="'/home/fashion'" class="btn btn-solid">back to home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Section ends -->
+<div id="component1">
+<!-- thank-you section start -->
+<section class="section-b-space light-layout" *ngIf="orderDetails && paymentStatus && paymentStatus === '100'">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="success-text">
+                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    <h2>{{'THANK_YOU' | translate}}</h2>
+                    <p>{{'PAYMENT_RECEIVED'| translate}}</p>
+                    <!-- <p>Transaction ID:{{ orderDetails['orderId'] }}</p> -->
+                    <button mat-raised-button *ngIf="showRegister" (click)="goToRegister()" style="margin: 1%" color="primary">{{'REGISTER' | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Section ends -->
+
+<!-- order-detail section start -->
+<section class="section-b-space" *ngIf="orderDetails && paymentStatus && paymentStatus === '100'">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="product-order">
+                    <h3>{{'YOUR_ORDER_DETAIL' | translate}}</h3>
+                    <div class="row product-order-detail" *ngFor="let foodItemDetail of orderDetails['orderFoodItemDTOList']">
+                        <!-- <div class="col-3">
+                            <img [src]="product.images[0].src" alt="" class="img-fluid">
+                        </div> -->
+                        <!-- <ng-container *ngFor="let foodItem of foodItemDetail['foodItemAndAddonDTO']"> -->
+                        <div class="col-2 order_detail">
+                            <div>
+                                <h4>{{'ITEM_NAME' | translate}}</h4>
+                                <h5>{{ foodItemDetail.foodItemAndAddonDTO[currentLanguage].itemName }} ({{ foodItemDetail.orderSizeList[0][currentLanguage] }})</h5>
+                            </div>              
+                        </div>
+                        <div class="col-2 order_detail">
+                            <div *ngIf="foodItemDetail['foodItemAndAddonDTO']['orderFoodItemAddonDTOList']">
+                                <h4>{{'ADDON' | translate}}</h4>
+                                <ng-container *ngFor="let addon of foodItemDetail['foodItemAndAddonDTO']['orderFoodItemAddonDTOList']">
+                                <h6>{{ addon['foodItemAddonBodyDTO'][currentLanguage].addonItemName }} ({{ addon.quantity }}) {{ addon.total | currency:'RM' }}</h6>
+                                </ng-container>
+                            </div>              
+                        </div>
+                        <div class="col-2 order_detail">
+                            <div>
+                                <h4>{{'QUANTITY' | translate}}</h4>
+                                <h5>{{ foodItemDetail.quantity }}</h5>
+                            </div>
+                        </div>
+                        <div class="col-3 order_detail">
+                            <div>
+                                <h4>{{'ITEM_PRICE' | translate}}</h4>
+                                <!-- <h5>{{ product?.price * productService?.Currency?.price | discount:product | currency:productService?.Currency.currency:'symbol' }}</h5> -->
+                                <h5>{{ foodItemDetail['orderSizeList'][0].price | currency:'RM' }}</h5>
+                            </div>
+                        </div>
+                        <div class="col-3 order_detail">
+                            <div>
+                                <h4>{{'TOTAL_PRICE' | translate}}</h4>
+                                <!-- <h5>{{ product?.price * productService?.Currency?.price | discount:product | currency:productService?.Currency.currency:'symbol' }}</h5> -->
+                                <h5>{{ foodItemDetail.total | currency:'RM' }}</h5>
+                            </div>
+                        </div>
+                        <!-- </ng-container> -->
+                    </div>
+                    <div class="total-sec">
+                        <ul>
+                            <li>{{'SUBTOTAL' | translate}} <span>{{ orderDetails['subtotal'] | currency:'RM' }}</span></li>
+                            <li>{{'PACKAGING_CHARGE'| translate}} <span>{{ orderDetails['packagingCharge'] | currency:'RM' }}</span></li>
+                            <!-- <li *ngIf="!orderDetails['pickUp']">Delivery Charge <span>RM 5.00</span></li> -->
+                            <li *ngIf="!orderDetails['pickUp']">{{'DELIVERY_CHARGE' | translate}} <span>{{deliveryCharge | currency:'RM' }}</span></li>
+                        </ul>
+                    </div>
+                    <div class="final-total">
+                        <h3>{{'TOTAL' | translate}} <span>{{ orderDetails['total'] | currency:'RM' }}</span></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="row order-success-sec">
+                    <div class="col-sm-6">
+                        <h4>{{'SUMMARY' | translate}}</h4>
+                        <ul class="order-detail">
+                            <li>{{'ORDER_ID' | translate}}: {{ orderDetails['orderId'] }}</li>
+                            <li>{{'ORDER_DATE' | translate}}: {{ orderDetails['orderDate'] | date:'short' }}</li>
+                            <!-- <li>Order Total: {{ orderDetails.totalAmount | currency:productService?.Currency.currency:'symbol' }}</li> -->
+                        </ul>
+                    </div>
+                    <div class="col-sm-6" *ngIf="!orderDetails['pickUp']">
+                        <h4>{{'DELIVERY_ADDRESS' | translate}}</h4>
+                        <ul class="order-detail">
+                            <li>{{ address['house'] }}, {{ address['street'] }}</li>
+                            <li>{{ address['city'] }}, {{ address['state'] }}</li>
+                            <li>{{ address['postcode'] }}</li>
+                            <li>Contact No. {{ orderDetails['customerContact'] }}</li>
+                        </ul>
+                    </div>
+
+                    <div class="col-sm-12 payment-mode">
+                        <h4>{{'PAYMENT_TYPE'| translate}}</h4>
+                        <h5>{{'YOU_ARE_USING' | translate}} {{ orderDetails['paymentType'] }}</h5>
+                    </div>
+                    <div class="col-md-12">
+                        <!-- <div class="delivery-sec">
+                            <h3>expected date of delivery</h3>
+                            <h2>March 21, 2021</h2>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <br>
+        <div>
+            <button mat-raised-button color="primary" (click)="printComponent('component1')">
+                {{'PRINT_RECEIPT' | translate}}
+            </button>
+        </div>
+    </div>
+</section>
+<!-- Section ends -->
+</div>

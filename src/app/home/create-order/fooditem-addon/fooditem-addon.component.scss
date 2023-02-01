@@ -1,0 +1,166 @@
+img {
+    width: 160px;
+    height: 90px;
+}
+
+.priceTag1{
+    text-align: center;
+}
+
+.priceTag2{
+    margin-left: 3px;
+}
+
+.container {
+    width: 800px;
+    height: auto;
+}
+
+mat-dialog-content{
+    height: 100%;
+    max-width: 100vw !important;
+}
+
+.category-title {
+    overflow: hidden; 
+    padding: 3px;
+    padding-bottom: 10px;
+    padding-top: 5px;
+    color: black;
+    font-weight: bold;
+    font-size: 16px;
+    
+}
+
+.small-required{
+    color: red;
+}
+
+.category-title:after{
+    content:"";
+    display: inline-block;
+    height: 0.5em;
+    vertical-align: bottom;
+    width: 100%;
+    margin-right: -100%;
+    margin-left: 10px;
+    border-top: 1px solid #ff8200;
+}
+
+.wrap-mat-radio-label {
+    white-space: normal;
+    word-break: break-all;
+}
+
+@media (max-width: 1025px) {
+
+    .container {
+        width: 750px;
+        height: auto;
+    }
+
+    mat-dialog-content{
+        height: 100%;
+    }
+
+    .myAddOns{
+        font-size: 13px;
+    }
+
+    mat-icon{
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 901px) {
+
+    .container {
+        width: 750px;
+        height: auto;
+    }
+
+    mat-dialog-content{
+        height: 100%;
+    }
+
+    .myAddOns{
+        font-size: 13px;
+    }
+
+    mat-icon{
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 769px) {
+
+    .container {
+        width: auto;
+        height: auto;
+    }
+
+    mat-dialog-content{
+        height: 100%;
+    }
+
+    .myAddOns{
+        font-size: 13px;
+    }
+
+    mat-icon{
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 481px) {
+
+    .container {
+        width: auto;
+        height: auto;
+    }
+
+    mat-dialog-content{
+        height: 100%;
+    }
+
+    .priceTag2{
+        margin-left: 3px;
+    }
+
+}
+
+@media (max-width: 415px) {
+
+    .container {
+        width: auto;
+        height: auto;
+    }
+
+    mat-dialog-content{
+        height: 100%;
+    }
+
+    .priceTag2{
+        margin-left: 0px;
+    }
+}
+
+@media (max-width: 361px) {
+
+    .container {
+        width: auto;
+        height: 400px;
+    }
+
+    mat-dialog-content{
+        height: 100%;
+    }
+
+    .myAddOns{
+        font-size: 13px;
+    }
+
+    .priceTag2{
+        margin-left: 0px;
+    }
+}

@@ -1,0 +1,110 @@
+<!-- <app-header-one [sticky]="true" *ngIf="url != '/pages/comingsoon'"></app-header-one> -->
+<app-breadcrumb [title]="'LOGIN' | translate" [breadcrumb]="'LOGIN' | translate"></app-breadcrumb>
+<!-- section start -->
+<section class="login-page section-b-space">
+   <div class="container">
+      <div class="row">
+         <div class="col-lg-6">
+            <h3>
+               {{ "LOGIN" | translate }}
+            </h3>
+            <div class="theme-card">
+               <form class="theme-form" [formGroup]="form" (ngSubmit)="submit()">
+                  <div class="form-group">
+                  <label for="email">{{'EMAIL'|translate}}</label>
+                     <input
+                        type="text"
+                        class="form-control"
+                        placeholder="{{'EMAIL'|translate}}"
+                        formControlName="email"
+                     />
+                  </div>
+                  <div class="mb-3">
+                     <small class="text-danger" *ngIf="isError('email', 'required', false)">
+                        {{ "REQUIRED" | translate }}
+                     </small>
+                     <small class="text-danger" *ngIf="isError('email', 'email', false)">
+                        {{ "INVALID_PATTERN" | translate }}
+                     </small>
+                     <small class="text-danger" *ngIf="isError('email', 'minlength', false)">
+                        {{ "INVALID_MINLENGTH" | translate }}
+                     </small>
+                  </div>
+
+                  <div class="form-group">
+                     <label for="review">{{'PASSWORD'|translate}}</label>
+                     <input
+                        type="password"
+                        class="form-control"
+                        placeholder="{{'ENTER_YOUR_PASSWORD'|translate}}"
+                        formControlName="password"
+                     />
+                  </div>
+                  <div class="mb-3">
+                     <small class="text-danger" *ngIf="isError('password', 'required', false)">
+                        {{ "REQUIRED" | translate }}
+                     </small>
+                     <small class="text-danger" *ngIf="isError('password', 'pattern', false)">
+                        {{ "INVALID_PATTERN" | translate }}
+                     </small>
+                     <small class="text-danger" *ngIf="isError('password', 'minlength', false)">
+                        {{ "INVALID_MINLENGTH" | translate }}
+                     </small>
+                  </div>
+
+                  <button class="btn btn-solid" type="submit" style="margin-bottom: 0.5rem;">
+                     {{ "LOGIN" | translate }}
+                  </button>
+                  <br />
+                  <small class="text-danger" *ngIf="errorMsg">
+                     {{ errorMsg | translate }}
+                  </small>
+                  <br />
+                  <a routerLink="/pages/forget-password">
+                     <small class="text-secondary">
+                        {{ "LOGIN_FRGT_PW" | translate }}
+                     </small>
+                  </a>
+               </form>
+                  <br>
+                  <br>
+                  <mat-divider></mat-divider>
+                  <br>
+                  <div class="d-flex justify-content-around">
+                  <!-- <button mat-button style="background-color:  #3b5998; color: white;" (click)="loginWithSocial('facebook')">
+                     <i class="fa fa-facebook" style="color: white;" aria-hidden="true"></i> Login With Facebook
+                 </button>
+                 <button mat-button style="background-color: #ea4335; color: white;" (click)="loginWithSocial('google')">
+                  <i class="fa fa-google-plus" style="color: white;" aria-hidden="true"></i> Login With Google
+                  </button> -->
+                  <!-- <button mat-button color="primary" (click)="signOutFromSocialAccount()">
+                     singout social
+                  </button> -->
+               </div>
+               
+            </div>
+         </div>
+
+         <div class="col-lg-6 right-login">
+            <h3>
+               {{ "LOGIN_NEW_CUST" | translate }}
+            </h3>
+
+            <div class="theme-card authentication-right">
+               <h6 class="title-font">
+                  {{ "LOGIN_CREATE_ACC" | translate }}
+               </h6>
+
+               <p>
+                  {{ "LOGIN_REG_DESC" | translate }}
+               </p>
+
+               <button class="btn btn-solid" routerLink="/pages/register">
+                  {{ "LOGIN_CREATE_ACC" | translate }}
+               </button>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+<!--Section ends-->

@@ -1,0 +1,53 @@
+<div class="container" *ngIf="SettingStoreOpenHours">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">{{ "OPENING_HOURS" | translate }}</th>
+                <th scope="col">{{ "FROM_TO" | translate }}</th>
+                <!-- assuming one day got break, others days also have -->
+                <th scope="col" *ngIf = "SettingStoreOpenHours.mondayAfterFrom">{{ "BREAK_FROM_TO" | translate }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="this.SettingStoreOpenHours.monday">
+                <td scope="row">{{ "MONDAY" | translate }}</td>
+                <td>{{SettingStoreOpenHours.mondayFrom}} - {{SettingStoreOpenHours.mondayTo}}</td>
+                <td *ngIf = "SettingStoreOpenHours.mondayAfterFrom">{{SettingStoreOpenHours.mondayAfterFrom}} - {{SettingStoreOpenHours.mondayAfterTo}}</td>
+            </tr>
+            <tr *ngIf="this.SettingStoreOpenHours.tuesday">
+                <td scope="row">{{ "TUESDAY" | translate }}</td>
+                <td>{{SettingStoreOpenHours.tuesdayFrom}} - {{SettingStoreOpenHours.tuesdayTo}}</td>
+                <td *ngIf = "SettingStoreOpenHours.mondayAfterFrom">{{SettingStoreOpenHours.tuesdayAfterFrom}} - {{SettingStoreOpenHours.tuesdayAfterTo}}</td>
+            </tr>
+            <tr *ngIf="this.SettingStoreOpenHours.wednesday">
+                <td scope="row">{{ "WEDNESDAY" | translate }}</td>
+                <td>{{SettingStoreOpenHours.wednesdayFrom}} - {{SettingStoreOpenHours.wednesdayTo}}</td>
+                <td *ngIf = "SettingStoreOpenHours.mondayAfterFrom">{{SettingStoreOpenHours.wednesdayAfterFrom}} - {{SettingStoreOpenHours.wednesdayAfterTo}}</td>
+            </tr>
+            <tr *ngIf="this.SettingStoreOpenHours.thursday">
+                <td scope="row">{{ "THURSDAY" | translate }}</td>
+                <td>{{SettingStoreOpenHours.thursdayFrom}} - {{SettingStoreOpenHours.thursdayTo}}</td>
+                <td *ngIf = "SettingStoreOpenHours.mondayAfterFrom">{{SettingStoreOpenHours.thursdayAfterFrom}} - {{SettingStoreOpenHours.thursdayAfterTo}}</td>
+            </tr>
+            <tr *ngIf="this.SettingStoreOpenHours.friday">
+                <td scope="row">{{ "FRIDAY" | translate }}</td>
+                <td>{{SettingStoreOpenHours.fridayFrom}} - {{SettingStoreOpenHours.fridayTo}}</td>
+                <td *ngIf = "SettingStoreOpenHours.mondayAfterFrom">{{SettingStoreOpenHours.fridayAfterFrom}} - {{SettingStoreOpenHours.fridayAfterTo}}</td>
+            </tr>
+            <tr *ngIf="this.SettingStoreOpenHours.saturday">
+                <td scope="row">{{ "SATURDAY" | translate }}</td>
+                <td>{{SettingStoreOpenHours.saturdayFrom}} - {{SettingStoreOpenHours.saturdayTo}}</td>
+                <td *ngIf = "SettingStoreOpenHours.mondayAfterFrom">{{SettingStoreOpenHours.saturdayAfterFrom}} - {{SettingStoreOpenHours.saturdayAfterTo}}</td>
+            </tr>
+            <tr *ngIf="this.SettingStoreOpenHours.sunday">
+                <td scope="row">{{ "SUNDAY" | translate }}</td>
+                <td>{{SettingStoreOpenHours.sundayFrom}} - {{SettingStoreOpenHours.sundayTo}}</td>
+                <td *ngIf = "SettingStoreOpenHours.mondayAfterFrom">{{SettingStoreOpenHours.sundayAfterFrom}} - {{SettingStoreOpenHours.sundayAfterTo}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="d-flex justify-content-end">
+    <button mat-raised-button color="primary" (click)="onClose()">{{ "CLOSE" | translate }}</button>
+</div>

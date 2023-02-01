@@ -1,0 +1,12 @@
+<h5 mat-dialog-title>{{ "DELIVERY_ADDRESS" | translate }}</h5>
+<h5>{{"PATCH_ADDRESS" | translate}}</h5>
+<p>{{addressObj?.house}}</p>
+<p>{{addressObj?.street}}</p>
+<p>{{addressObj?.city}}</p>
+<p>{{addressObj?.state}}</p>
+
+
+<div class="d-flex justify-content-end">
+    <button mat-raised-button color="primary" style="margin: 1%" (click)="closeDialog(true)">{{ "YES" | translate }}</button>
+    <button mat-raised-button color="primary" style="margin: 1%" (click)="closeDialog(false)">{{ "NO" | translate }}</button>
+</div>

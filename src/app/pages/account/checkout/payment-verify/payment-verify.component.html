@@ -1,0 +1,82 @@
+<!-- <app-header-one [sticky]="true"></app-header-one> -->
+<section class="section-b-space light-layout" *ngIf="paymentStatus && paymentStatus === '100' && orderStatus != 'FAILED_CREATE'">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="success-text">
+                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    <h2>{{'THANK_YOU' | translate}}</h2>
+                    <p>{{'PAYMENT_RECEIVED'| translate}}</p>
+                    <button mat-raised-button *ngIf="showRegister" (click)="goToRegister()" style="margin: 1%" color="primary">{{'REGISTER' | translate}}</button>
+                    <button mat-raised-button (click)="showReceipt()" style="margin: 1%" color="primary">{{'SHOW_RECEIPT' | translate}}</button>
+                    <!-- <p>Transaction ID:{{ orderDetails['orderId'] }}</p> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-b-space light-layout" *ngIf="paymentStatus && paymentStatus === 'E2' && orderStatus != 'FAILED_CREATE'">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="fail-text">
+                    <i class="fa fa-times-circle" aria-hidden="true"></i>
+                    <h2>{{'SORRY' | translate}}</h2>
+                    <p>{{'PAYMENT_ABORT' | translate}}</p>
+                    <button mat-raised-button (click)="goBackOrder()" color="primary">{{'GO_BACK_ORDER' | translate}}</button>
+                    <!-- <p>Transaction ID:{{ orderDetails['orderId'] }}</p> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-b-space light-layout" *ngIf="paymentStatus && paymentStatus === 'E1' && orderStatus != 'FAILED_CREATE'">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="fail-text">
+                    <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                    <h2>{{'SORRY' | translate}}</h2>
+                    <p>{{'PAYMENT_FAIL' | translate}}</p>
+                    <button mat-raised-button (click)="goBackOrder()" color="primary">{{'GO_BACK_ORDER' | translate}}</button>
+                    <!-- <p>Transaction ID:{{ orderDetails['orderId'] }}</p> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-b-space light-layout" *ngIf="paymentStatus && paymentStatus === '-1' && orderStatus != 'FAILED_CREATE'">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="fail-text">
+                    <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                    <h2>{{'SORRY' | translate}}</h2>
+                    <p>{{'PAYMENT_FAIL' | translate}}</p>
+                    <button mat-raised-button (click)="goBackOrder()" color="primary">{{'GO_BACK_ORDER' | translate}}</button>
+                    <!-- <p>Transaction ID:{{ orderDetails['orderId'] }}</p> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-b-space light-layout" *ngIf="paymentStatus && paymentStatus === '100' && orderStatus == 'FAILED_CREATE'">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="fail-text">
+                    <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                    <h2>{{'SORRY' | translate}}</h2>
+                    <p>{{'FAILED_CREATE_DELIVERY' | translate}}</p>
+                    <p></p>
+                    <button mat-raised-button (click)="goBackOrder()" color="primary">{{'GO_BACK_ORDER' | translate}}</button>
+                    <!-- <p>Transaction ID:{{ orderDetails['orderId'] }}</p> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

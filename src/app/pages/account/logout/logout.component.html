@@ -1,0 +1,20 @@
+<!-- <app-header-one [sticky]="true" *ngIf="url != '/pages/comingsoon'"></app-header-one> -->
+<app-breadcrumb [title]="'Logout'" [breadcrumb]="'Logout'"></app-breadcrumb>
+<!-- section start -->
+<section class="authentication-page section-b-space">
+   <div class="container">
+      <div class="col-sm-12 text-center">
+         <!-- <img src="assets/images/empty-search.jpg" class="img-fluid mb-4" /> -->
+         <h3>
+            {{ "SUCCESSFUL_LOGOUT" | translate }}
+         </h3>
+         <p>
+            {{ "PLEASE_VISIT_AGAIN" | translate }}
+         </p>
+         <a [routerLink]="['/pages/login']" class="btn btn-solid">
+            {{ "GO_TO_LOGIN" | translate }}
+         </a>
+      </div>
+   </div>
+</section>
+<!-- section end -->

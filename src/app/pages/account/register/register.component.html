@@ -1,0 +1,186 @@
+<!-- <app-header-one [sticky]="true" *ngIf="url != '/pages/comingsoon'"></app-header-one> -->
+<app-breadcrumb [title]="'REGISTER' | translate" [breadcrumb]="'REGISTER' | translate"></app-breadcrumb>
+<!-- section start -->
+<section class="register-page section-b-space">
+   <div class="container">
+      <div class="row">
+         <div class="col-lg-12">
+            <h3>
+               {{ "REG_HEADING" | translate }}
+            </h3>
+            <div class="theme-card">
+               <form class="theme-form" [formGroup]="form" (ngSubmit)="submit()">
+                  <div class="form-row">
+                     <div class="col-md-6">
+                        <label>
+                           {{ "FIRST_NAME" | translate }}
+                        </label>
+                        <input
+                           type="text"
+                           class="form-control"
+                           [placeholder]="'FIRST_NAME' | translate"
+                           formControlName="firstName"
+                        />
+                        <div class="mb-3">
+                           <small class="text-danger" *ngIf="isError('firstName', 'required', false)">
+                              {{ "REQUIRED" | translate }}
+                           </small>
+                           <small class="text-danger" *ngIf="isError('firstName', 'pattern', false)">
+                              {{ "INVALID_PATTERN" | translate }}
+                           </small>
+                        </div>
+                     </div>
+
+                     <div class="col-md-6">
+                        <label>
+                           {{ "LAST_NAME" | translate }}
+                        </label>
+                        <input
+                           type="text"
+                           class="form-control"
+                           [placeholder]="'LAST_NAME' | translate"
+                           formControlName="lastName"
+                        />
+                        <div class="mb-3">
+                           <small class="text-danger" *ngIf="isError('firstName', 'required', false)">
+                              {{ "REQUIRED" | translate }}
+                           </small>
+                           <small class="text-danger" *ngIf="isError('firstName', 'pattern', false)">
+                              {{ "INVALID_PATTERN" | translate }}
+                           </small>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="form-row">
+                     <div class="col-md-6">
+                        <label>
+                           {{ "EMAIL" | translate }}
+                        </label>
+                        <input
+                           type="email"
+                           class="form-control"
+                           [placeholder]="'EMAIL' | translate"
+                           formControlName="email"
+                        />
+                        <div class="mb-3">
+                           <small class="text-danger" *ngIf="isError('email', 'required', false)">
+                              {{ "REQUIRED" | translate }}
+                           </small>
+                           <small class="text-danger" *ngIf="isError('email', 'email', false)">
+                              {{ "INVALID_PATTERN" | translate }}
+                           </small>
+                        </div>
+                     </div>
+
+                     <div class="col-md-6">
+                        <label>
+                           {{ "PHONE_NUMBER" | translate }}
+                        </label>
+                        <div class="row">
+                           <div class="col-md-3 col-4">
+                              <label class="form-control " >
+                                 <!-- <option
+                                    [selected]="item.code === '+60'"
+                                    *ngFor="let item of mobileNumbers"
+                                    [value]="item.code"
+                                 >
+                                    {{ item.code }} 
+                                 </option> -->
+                                 <p class="c53text">+60</p>
+                              </label>
+                           </div>
+
+                           <div class="col-md-9 col-8 pl-0">
+                              <input
+                                 type="text"
+                                 class="form-control"
+                                 [placeholder]="'PHONE_NUMBER' | translate"
+                                 formControlName="phoneNumber"
+                              />
+                           </div>
+                        </div>
+                        <div class="mb-3">
+                           <small
+                              class="text-danger"
+                              *ngIf="isErrors(['phonePrefix', 'phoneNumber'], 'required', false)"
+                           >
+                              {{ "REQUIRED" | translate }}
+                           </small>
+                           <small
+                              class="text-danger"
+                              *ngIf="isErrors(['phonePrefix', 'phoneNumber'], 'pattern', false)"
+                           >
+                              {{ "INVALID_PATTERN" | translate }}
+                           </small>
+                           <small
+                              class="text-danger"
+                              *ngIf="isErrors(['phonePrefix', 'phoneNumber'], 'minlength', false)"
+                           >
+                              {{ "INVALID_MINLENGTH" | translate }}
+                           </small>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="form-row">
+                     <div class="col-md-6">
+                        <label>
+                           {{ "PASSWORD" | translate }}
+                        </label>
+                        <input
+                           type="password"
+                           class="form-control"
+                           [placeholder]="'PASSWORD' | translate"
+                           formControlName="password"
+                        />
+                        <div class="mb-3">
+                           <small class="text-danger" *ngIf="isError('password', 'required', false)">
+                              {{ "REQUIRED" | translate }}
+                           </small>
+                           <small class="text-danger" *ngIf="isError('password', 'pattern', false)">
+                              {{ "INVALID_PATTERN" | translate }}
+                           </small>
+                           <small class="text-danger" *ngIf="isError('password', 'minlength', false)">
+                              {{ "INVALID_MINLENGTH" | translate }}
+                           </small>
+                        </div>
+                     </div>
+
+                     <div class="col-md-6">
+                        <label>
+                           {{ "CONFIRM_PASSWORD" | translate }}
+                        </label>
+                        <input
+                           type="password"
+                           class="form-control"
+                           [placeholder]="'CONFIRM_PASSWORD' | translate"
+                           formControlName="confirmPassword"
+                        />
+                        <div class="mb-3">
+                           <small class="text-danger" *ngIf="isError('confirmPassword', 'required', false)">
+                              {{ "REQUIRED" | translate }}
+                           </small>
+                           <small class="text-danger" *ngIf="isError('confirmPassword', 'pattern', false)">
+                              {{ "INVALID_PATTERN" | translate }}
+                           </small>
+                           <small class="text-danger" *ngIf="isError('confirmPassword', 'minlength', false)">
+                              {{ "INVALID_MINLENGTH" | translate }}
+                           </small>
+                           <small class="text-danger" *ngIf="isError('confirmPassword', 'unmatch', false)">
+                              {{ "PW_NOT_MATCH" | translate }}
+                           </small>
+                        </div>
+                     </div>
+
+                     <button class="btn btn-solid" type="submit">
+                        {{ "REG_BTN_CREATE" | translate }}
+                     </button>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+<!--Section ends-->

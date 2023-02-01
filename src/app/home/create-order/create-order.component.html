@@ -1,0 +1,747 @@
+<!-- <app-header-one [sticky]="true"></app-header-one> -->
+
+<!-- Parallax banner start-->
+<!-- <section class="p-0">
+  <div class="full-banner parallax-banner1 parallax text-center p-left" [ngStyle]="{'background-image': 'url(https://orderkawkawtest.s3.ap-southeast-1.amazonaws.com/background/kfc/KFC.png)'}">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-12 d-flex justify-content-center">
+                  <div class="banner-contain">
+                      <img class="logo-medium" src={{logo}}>
+                      <br>
+                      <h4 style="color: white;">{{shopName}}</h4>
+                      <br>
+                      <h6 style="color: white;">Address Line One</h6>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section> -->
+
+<!-- matstepper -->
+<!-- <app-matstep></app-matstep> -->
+<!-- matstepper end -->
+<!-- Parallax banner End -->
+
+<!-- RESPONSIVE -->
+<!-- <button [ngxScrollTo]="'destination'">Go to destination</button>
+
+<div id="destination" #destination>
+  scrool
+</div> -->
+<div class="container-fluid my-4">
+  <div class="row">
+    <!-- category -->
+    <div class="col-sm-12 col-md-12 col-xl-2">
+      <!-- <div class="category">
+				<div class="title1">
+					<h4 class="title-inner1" style="color: black;">Select Category</h4>
+				</div>
+				<div *ngFor="let category of categoryFilterLang">
+					<button mat-button class="text-left col-md-12" style="width: 100%;" (click)="onClickCategory(category.categoryName)">{{category.categoryName}}</button>
+				</div>
+			</div> -->
+
+      <!-- information -->
+      <!-- <div class="mt-5"> -->
+      <div class="title1">
+        <h4 class="title-inner1" style="color: black">
+          {{ "INFORMATION" | translate }}
+        </h4>
+      </div>
+      <div class="row d-flex justify-content-center my-4">
+        <button mat-raised-button class="m-1" (click)="openOpeningHours()">
+          {{ "OPENING_HOURS" | translate }}
+        </button>
+        <button mat-raised-button class="m-1" (click)="openDeliveryHours()">
+          {{ "DELIVERY_HOURS" | translate }}
+        </button>
+        <small *ngIf="invalidTimeOrDate" style="color: red">
+          {{ "MESSAGEONE" | translate }}
+        </small>
+      </div>
+
+      <div class="column d-flex align-items-center flex-column my-4">
+        <div class="my-2" *ngIf="freeDeliveryCost != -1">
+          {{ "FREE_DELIVER_EXCEED" | translate }}{{ freeDeliveryCost }}
+        </div>
+        <!--<div class="my-2" *ngIf="freeDeliveryCost == -1">
+          {{ "NO_FREE_DELIVER" | translate }}
+        </div>
+        <div class="my-2" *ngIf="minItemDelivery != -1">
+          {{ "MINIMUM_ITEM_DELIVERY" | translate }}{{ minItemDelivery }}
+        </div>-->
+        <div class="my-2" *ngIf="minDelivery != -1">
+          {{ "MINIMUM_AMOUNT_DELIVERY" | translate }}{{ minDelivery }}
+        </div>
+        <div class="my-2" *ngIf="maxDelivery != -1">
+          {{ "MAXIMUM_AMOUNT_DELIVERY" | translate }}{{ maxDelivery }}
+        </div>
+        <div class="my-2" *ngIf="minPickup != -1">
+          {{ "MINIMUM_AMOUNT_PICKUP" | translate }}{{ minPickup }}
+        </div>
+        <div class="my-2" *ngIf="maxPickup != -1">
+          {{ "MAXIMUM_AMOUNT_PICKUP" | translate }}{{ maxPickup }}
+        </div>
+
+        <div
+          class="text-danger my-2"
+          *ngIf="checkOutDisabledReason === 'Shop is closed.'"
+        >
+          {{ "SHOP_CLOSED" | translate }}
+        </div>
+        <!-- <div
+          class="text-danger my-2"
+          *ngIf="checkOutDisabledReason === 'Not enough time for preparation.'"
+        >
+          {{ "NOT_ENOUGH_PREPARATION" | translate }}
+        </div> -->
+        <div
+          class="text-danger my-2"
+          *ngIf="checkOutDisabledReason === 'Not in delivery time range.'"
+        >
+          {{ "NOT_DELIVERY_RANGE" | translate }}
+        </div>
+      </div>
+
+      <!-- </div> -->
+    </div>
+
+    <!-- food items -->
+    <div class="col-sm-12 col-md-12 col-xl-8 foods-div">
+      <div class="foods title1">
+        <h4 class="title-inner1" style="color: black">
+          {{ "MENU" | translate }}
+        </h4>
+      </div>
+      <div class="item-category" *ngFor="let category of categoryFilterLang">
+        <h4 class="category-title" style="color: black">
+          {{ category.categoryName }}
+        </h4>
+
+        <div class="menu-div row mr-2">
+          <ng-container *ngFor="let menu of menus">
+            <div
+              class="items-div col-sm-6 col-md-4 col-xl-4 p-2"
+              *ngIf="identifyFoodCategory(menu, category.categoryName)"
+            >
+              <div class="items card shadow-sm">
+                <div class="col">
+                  <div class="row list-item-logo d-flex justify-content-center">
+                    <img
+                      class="logo-medium img-item"
+                      src="{{ menu['general'].imageUrl }}"
+                    />
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-7">
+                      <div class="short-div">
+                        <div class="row m-2">
+                          <h5 style="color: black">
+                            {{ menu[currentLanguage].itemName }}
+                          </h5>
+                        </div>
+                      </div>
+                      <div class="short-div">
+                        <div class="row mx-2 mb-3">
+                          <button
+                            *ngIf="menu['general'].available == true"
+                            class="btn button"
+                            color="primary"
+                            (click)="openAddons(menu)"
+                          >
+                            {{ "ORDER" | translate }}
+                          </button>
+                          <button
+                            *ngIf="menu['general'].available == false"
+                            class="btn soldout-button"
+                            disabled
+                          >
+                            {{ "SOLD_OUT" | translate }}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-5">
+                      <div class="row">
+                        <div class="col-md-11 text-right">
+                          <strong><p class="text-right" style="color: black; padding-top: 38px; font-size: 21px; color: #f5aa07;">
+                            RM {{ menu['foodSizeBodyDTOList'][0].foodSizeGeneralDTO.price | number:'1.2-2' }}
+                          </p></strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              
+
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <!-- delivery -->
+    <div class="col-sm-12 col-md-12 col-xl-2 px-4">
+      <div class="delivery">
+        <div class="title1">
+          <h4 class="title-inner1" style="color: black">
+            {{ "DELIVERY/PICKUP" | translate }}
+          </h4>
+        </div>
+        <div>
+          <div class="row d-flex justify-content-center">
+            <h6>{{ "OPTIONS" | translate }}</h6>
+          </div>
+          <div class="row d-flex justify-content-center">
+            <mat-form-field color="primary" appearance="outline">
+              <mat-label>{{ "CHOOSE_AN_OPTION" | translate }}</mat-label>
+              <mat-select
+                [(ngModel)]="pickup"
+                (selectionChange)="
+                  checkMerchantAvailability(); filterOpenStoreHour()
+                "
+              >
+                <mat-option *ngIf="this.onDemandDelivery" [value]="false">{{
+                  "DELIVERY" | translate
+                }}</mat-option>
+                <mat-option *ngIf="this.onDemandPickup" [value]="true">{{
+                  "PICKUP" | translate
+                }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="row d-flex justify-content-center">
+            <h6>{{ "RECEIVE_ON" | translate }}</h6>
+          </div>
+          <div class="row d-flex justify-content-around">
+            <mat-radio-group
+              [(ngModel)]="preorder"
+              color="primary"
+              (change)="checkMerchantAvailability()"
+              *ngIf="!preOrderOnly"
+            >
+              <span
+                ><mat-radio-button [value]="false">{{
+                  "ORDER_NOW" | translate
+                }}</mat-radio-button>
+              </span
+              ><br>
+              <span
+                ><mat-radio-button [value]="true" style="margin-top: 10px;">{{
+                  "PRE_ORDER" | translate
+                }}</mat-radio-button></span
+              >
+            </mat-radio-group>
+
+            <mat-radio-group
+              [(ngModel)]="preorder"
+              color="primary"
+              (change)="checkMerchantAvailability()"
+              *ngIf="preOrderOnly"
+            >
+              <span
+                ><mat-radio-button [value]="true" style="margin-top: 10px;">{{
+                  "PRE_ORDER" | translate
+                }}</mat-radio-button></span
+              >
+            </mat-radio-group>
+          </div>
+          <div *ngIf="preorder == true">
+            <div class="row d-flex justify-content-center">
+              <mat-form-field color="primary" appearance="outline">
+                <mat-label>{{ "CHOOSE_A_DATE" | translate }}</mat-label>
+                <input
+                  matInput
+                  [matDatepickerFilter]="dayFilter"
+                  [matDatepicker]="picker"
+                  [(ngModel)]="date"
+                  (dateChange)="checkMerchantAvailability()"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="row d-flex justify-content-center">
+              <input
+                style="width: 200px; height: 50px"
+                class="form-control"
+                type="time"
+                [(ngModel)]="time"
+                (change)="checkMerchantAvailability()"
+              />
+            </div>
+          </div>
+          <div class="row d-flex justify-content-center mt-4">
+            <button
+              mat-raised-button
+              color="primary"
+              [disabled]="!canOrder"
+              (click)="checkMerchantAvailability(true)"
+            >
+              {{ "CHECKOUT" | translate }}
+            </button>
+          </div>
+          <div class="row d-flex justify-content-center mt-4">
+            <div
+              class="text-danger my-2"
+              *ngIf="checkOutDisabledReason === 'Shop is closed.'"
+            >
+              {{ "SHOP_CLOSED" | translate }}
+            </div>
+            <div
+              class="text-danger my-2"
+              *ngIf="
+                checkOutDisabledReason === 'Not enough time for preparation.'
+              "
+            >
+              {{ "NOT_ENOUGH_PREPARATION" | translate }}
+            </div>
+            <div
+              class="text-danger my-2"
+              *ngIf="checkOutDisabledReason === 'Not in delivery time range.'"
+            >
+              {{ "NOT_DELIVERY_RANGE" | translate }}
+            </div>
+          </div>
+          <div style="text-align: center;">
+            <div class="row d-flex justify-content-center mt-4">
+              <div class="col mt-12">
+                <div class="row d-flex justify-content-center">
+                  <h5>
+                    {{ "PREPARATION_TIME" | translate }}:
+                  </h5>
+                </div>
+                <div class="row d-flex justify-content-center">
+                  <h5>
+                    {{ preparationEstimate }}
+                  </h5>
+                  <small *ngIf="invalidTimeOrDate" style="color: red">
+                    {{ "MESSAGEONE" | translate }}
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="selectedDeliveryOption === 'delivery'" class="row d-flex justify-content-center mt-4">
+              <div class="col mt-12">
+                <div class="row d-flex justify-content-center">
+                  <h5>
+                    <h5>{{ "EXPECTED_REACH_TIME" | translate }}:</h5>
+                  </h5>
+                </div>
+                <div class="row d-flex justify-content-center">
+                  <h5 style="margin-top: -10px;">{{ reachTime }}</h5>
+              <small *ngIf="invalidTimeOrDate" style="color: red">
+                {{ "MESSAGEONE" | translate }}
+              </small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESPONSIVE -->
+
+<!-- Tab product start-->
+<!-- <div class="title1 section-t-space"> -->
+<!-- <h4>exclusive products</h4>
+  <h2 class="title-inner1">special products</h2> -->
+<!-- </div>
+<section class="section-b-space p-t-0">
+  <div class="container-lg">
+    <div class="row">
+      <div class="col theme-tab">
+        <ngb-tabset [justify]="'center'" [type]="'pills'" class="tabs tab-title"> -->
+<!-- <ngb-tab>
+            <ng-template ngbTabTitle>New Products</ng-template>
+            <ng-template ngbTabContent>
+              <div class="no-slider row">
+                <ng-container *ngFor="let product of products | slice:0:8">
+                  <div class="product-box">
+                    <app-product-box-one 
+                      [product]="product" 
+                      [currency]="productService?.Currency"
+                      [thumbnail]="true"
+                      [cartModal]="true">
+                    </app-product-box-one>
+                  </div>
+                </ng-container>
+              </div>
+            </ng-template>
+          </ngb-tab> -->
+
+<!-- Menu -->
+<!-- <ngb-tab title="Menu">
+            <ng-template ngbTabContent> -->
+<!-- <form [formGroup]="OpeningHours"> -->
+<!-- <div class="container-sm inner d-flex justify-content-center">
+                  <div class="inner-2 row col-md-12">
+                      <div class="col-md-2"> -->
+<!-- Start Categories List -->
+
+<!-- End Categories List -->
+<!-- </div>
+                      <div class="col-md-6"> -->
+
+<!-- Tab product start-->
+
+<!-- Food Item Listing -->
+
+<!-- End Food Item Listing -->
+
+<!-- Tab product End -->
+<!-- </div>
+
+                      <div class="col-md-4">
+                        <div class="title1">
+                          <div class="col-md-12">                                    
+                            <h4 class="title-inner1" style="color: black;">Cart</h4> -->
+
+<!-- <div class="row">
+                              <div class="col-md-6">
+                                <h5 class="text-center">Item</h5>
+                              </div>
+                              <div class="col-md-2">
+                                <h5 class="text-center">Qty</h5>
+                              </div>
+                              <div class="col-md-2">
+                                <h5 class="text-center">Price (RM)</h5>
+                              </div>
+                              <div class="col-md-2">
+                                <h5 class="text-center">Total (RM)</h5>
+                              </div>
+                            </div> -->
+
+<!-- <hr style="width:100%;text-align:left;margin-left:0"> -->
+
+<!-- <div class="row" *ngIf="checkEmptyCart()">
+                              <div class="col-md-12">
+                                <h3 class="text-center">Empty cart</h3>
+                              </div>
+                            </div> -->
+
+<!-- <div class="row" *ngFor="let cartItem of cartItems"> -->
+<!-- <div class="row col-md-12">     -->
+<!-- Item Name -->
+<!-- <div class="col-md-6">
+                                  <div class="col-md-12 d-flex justify-content-left">
+                                    <h6 class="text-left" style="color: black;">{{cartItem.itemName}}</h6>
+                                    <br>
+                                    <button
+                                    class="btn-icon"
+                                      color="primary"
+                                      mat-icon-button
+                                      matTooltip="Edit this item"
+                                      (click)="openEditItem(cartItem)"
+                                    > 
+                                      <mat-icon>edit</mat-icon>
+                                      </button>
+                                      <button
+                                      class="btn-icon"
+                                      color="primary"
+                                      mat-icon-button
+                                      matTooltip="Delete this item"
+                                      (click)="deleteItem(cartItem)"
+                                    > 
+                                      <mat-icon>delete</mat-icon>
+                                      </button>
+                                  </div>
+                                      
+                              </div> -->
+
+<!-- Quantity -->
+<!-- <div class="col-md-2">
+                                <a class="text-center">{{cartItem.quantity}}</a>
+                              </div> -->
+
+<!-- Price -->
+<!-- <div class="col-md-2">
+                                <a class="text-center">{{cartItem.price | currency}}</a>
+                              </div> -->
+
+<!-- Total Price -->
+<!-- <div class="col-md-2">
+                                <a class="text-center">{{cartItem.totalPrice | currency}}</a>
+                              </div> -->
+<!-- </div> -->
+
+<!-- <div class="row col-md-12" *ngIf="checkAddonChecked(cartItem)">
+                              <div class="col-md-12">
+                                <h6 class="text-left">Addon</h6>
+                              </div>
+                            </div> -->
+
+<!-- <div class="row col-md-12" *ngFor="let addon of cartItem['addonItems']"> -->
+<!-- addon item -->
+<!-- <div class="col-md-6" *ngIf="addon.checked == true">
+                                <div class="col-md-12 d-flex justify-content-left">
+                                  <h6 class="text-left" style="color: black;">{{addon.addonName}}</h6>
+                                </div>
+                                    
+                              </div> -->
+
+<!-- Quantity -->
+<!-- <div class="col-md-2" *ngIf="addon.checked == true">
+                                <a class="text-center">{{addon.quantity}}</a>
+                              </div> -->
+
+<!-- Price -->
+<!-- <div class="col-md-2" *ngIf="addon.checked == true">
+                                <a class="text-center">{{addon.price | currency}}</a>
+                              </div> -->
+
+<!-- Total Price -->
+<!-- <div class="col-md-2" *ngIf="addon.checked == true">
+                                <a class="text-center">{{addon.totalPrice | currency}}</a>
+                              </div> -->
+<!-- <hr style="width:100%;text-align:left;margin-left:0"> -->
+<!-- </div> -->
+<!-- <hr style="width:100%;text-align:left;margin-left:0"> -->
+<!-- <br> -->
+<!-- </div> -->
+<!-- <hr *ngIf="checkEmptyCart()" style="width:100%;text-align:left;margin-left:0"> -->
+
+<!-- <div class="row">
+                              <div class="col-md-6 text-left">
+                                <label>Sub Total:</label>
+                              </div>
+                              <div class="col-md-6 text-right">
+                                <label>{{subtotal | currency:'RM'}}</label>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-6 text-left">
+                                <label>Packaging:</label>
+                              </div>
+                              <div class="col-md-6 text-right">
+                                <label>{{packageChargeCost | currency:'RM'}}</label>
+                              </div>           
+                            </div>
+                            <div class="row">
+                              <div class="col-md-6 text-left">
+                                <h3 style="color:black;"><b>Total:</b></h3>
+                              </div>
+                              <div class="col-md-6 text-right">
+                                <h3 style="color:black;"><b>{{grandTotal | currency:'RM'}}</b></h3>
+                              </div>           
+                            </div> -->
+
+<!-- <hr style="width:100%;text-align:left;margin-left:0"> -->
+
+<!-- </div>
+                        </div>
+                      </div>
+                  </div>
+                </div> -->
+
+<!-- </form> -->
+<!-- </ng-template>
+          </ngb-tab> -->
+
+<!-- Opening Hours -->
+<!-- <ngb-tab title="Opening Hours">
+            <ng-template ngbTabContent> -->
+<!-- <form [formGroup]="OpeningHours"> -->
+<!-- <div class="container"  >
+                  <div class="row c53move">
+                  <div class="col-md-3 col-xs-3">
+                    <h4 class="c53text" style="color: black;">Opening Hours</h4>
+                  
+                  </div>
+                  <div class="col-md-6 col-xs-6"><h4 class="c53text c53right" style="color: black;">From - To</h4></div>
+                  <div class="col-md-3 col-xs-3"></div>
+                    </div>
+                  <div class="row  c53border"  *ngIf="this.SettingStoreOpenHours.monday">
+                    <div class="col-md-3 col-xs-3">
+                      <h4>Monday</h4>
+                    </div>
+                    <div class="col-md-6 col-xs-6"><h4>{{SettingStoreOpenHours.mondayFrom}} - {{SettingStoreOpenHours.mondayTo}} </h4></div>
+                    <div class="col-md-3 col-xs-3">
+                    </div>            
+                  </div>
+
+                  <div class="row  c53border" *ngIf="this.SettingStoreOpenHours.tuesday">
+                    <div class="col-md-3 col-xs-3">
+                      <h4>Tuesday</h4>
+                    </div>
+                    <div class="col-md-6 col-xs-6"><h4>{{SettingStoreOpenHours.tuesdayFrom}} - {{SettingStoreOpenHours.tuesdayTo}}</h4></div>
+                    <div class="col-md-3 col-xs-3">
+                    </div>
+                  </div>
+
+                  <div class="row  c53border"*ngIf="this.SettingStoreOpenHours.wednesday">
+                    <div class="col-md-3 col-xs-3">
+                      <h4>Wednesday</h4>
+                    </div>
+                    <div class="col-md-6 col-xs-6"><h4>{{SettingStoreOpenHours.wednesdayFrom}} - {{SettingStoreOpenHours.wednesdayTo}}</h4></div>
+                    <div class="col-md-3 col-xs-3">
+                    </div>    
+                  </div>
+
+                  <div class="row  c53border"*ngIf="this.SettingStoreOpenHours.thursday">
+                    <div class="col-md-3 col-xs-3">
+                      <h4>Thursday</h4>
+                    </div>
+                    <div class="col-md-6 col-xs-6"><h4>{{SettingStoreOpenHours.thursdayFrom}} - {{SettingStoreOpenHours.thursdayTo}}</h4></div>
+                    <div class="col-md-3 col-xs-3">
+                    </div>
+                   </div>
+
+                  <div class="row  c53border" *ngIf="this.SettingStoreOpenHours.friday">
+                    <div class="col-md-3 col-xs-3">
+                      <h4>Friday</h4>
+                    </div>
+                    <div class="col-md-6 col-xs-6"><h4>{{SettingStoreOpenHours.fridayFrom}} - {{SettingStoreOpenHours.fridayTo}}</h4></div>
+                    <div class="col-md-3 col-xs-3">
+                    </div>
+                  </div>
+
+                  <div class="row  c53border" *ngIf="this.SettingStoreOpenHours.saturday">
+                    <div class="col-md-3 col-xs-3" >
+                      <h4>Saturday</h4>
+                    </div>
+                    <div class="col-md-6 col-xs-6"><h4>{{SettingStoreOpenHours.saturdayFrom}} - {{SettingStoreOpenHours.saturdayTo}}</h4></div>
+                    <div class="col-md-3 col-xs-3">
+                    </div>
+                  </div>
+
+                  <div class="row  c53border" *ngIf="this.SettingStoreOpenHours.sunday">
+                    <div class="col-md-3 col-xs-3">
+                      <h4>Sunday</h4>
+                    </div>
+                    <div class="col-md-6 col-xs-6"><h4>{{SettingStoreOpenHours.sundayFrom}} - {{SettingStoreOpenHours.sundayTo}}</h4></div>
+                    <div class="col-md-3 col-xs-3">
+                    </div>
+                  </div>
+
+                  <div class="row c53move"><div class="title1 c53bor" >
+                    <h4  class="c53text" style="color: black;">delivery Hours</h4>
+                  </div></div>
+                  <div class="row  c53border" *ngIf="this.SettingStoreOpenHours.mondayDel">
+                    <div class="col-md-3 col-xs-3">
+                      <h4>Monday</h4>
+                    </div>
+                    <div class="col-md-6 col-xs-6"><h4>{{SettingStoreOpenHours.mondayFromDel}} - {{SettingStoreOpenHours.mondayToDel}} </h4></div>
+                    <div class="col-md-3 col-xs-3">
+                    </div>            
+                  </div>
+
+                  <div class="row  c53border" *ngIf="this.SettingStoreOpenHours.tuesdayDel">
+                    <div class="col-md-3 col-xs-3">
+                      <h4>Tuesday</h4>
+                    </div>
+                    <div class="col-md-6 col-xs-6"><h4>{{SettingStoreOpenHours.tuesdayFromDel}} - {{SettingStoreOpenHours.tuesdayToDel}}</h4></div>
+                    <div class="col-md-3 col-xs-3">
+                    </div>
+                  </div>
+
+                  <div class="row  c53border" *ngIf="this.SettingStoreOpenHours.wednesdayDel">
+                    <div class="col-md-3 col-xs-3">
+                      <h4>Wednesday</h4>
+                    </div>
+                    <div class="col-md-6 col-xs-6"><h4>{{SettingStoreOpenHours.wednesdayFromDel}} - {{SettingStoreOpenHours.wednesdayToDel}}</h4></div>
+                    <div class="col-md-3 col-xs-3">
+                    </div>    
+                  </div>
+
+                  <div class="row  c53border" *ngIf="this.SettingStoreOpenHours.thursdayDel">
+                    <div class="col-md-3 col-xs-3">
+                      <h4>Thursday</h4>
+                    </div>
+                    <div class="col-md-6 col-xs-6"><h4>{{SettingStoreOpenHours.thursdayFromDel}} - {{SettingStoreOpenHours.thursdayToDel}}</h4></div>
+                    <div class="col-md-3 col-xs-3">
+                    </div>
+                   </div>
+
+                  <div class="row  c53border" *ngIf="this.SettingStoreOpenHours.fridayDel">
+                    <div class="col-md-3 col-xs-3">
+                      <h4>Friday</h4>
+                    </div>
+                    <div class="col-md-6 col-xs-6"><h4>{{SettingStoreOpenHours.fridayFromDel}} - {{SettingStoreOpenHours.fridayToDel}}</h4></div>
+                    <div class="col-md-3 col-xs-3">
+                    </div>
+                  </div>
+
+                  <div class="row  c53border" *ngIf="this.SettingStoreOpenHours.saturdayDel">
+                    <div class="col-md-3 col-xs-3">
+                      <h4>Saturday</h4>
+                    </div>
+                    <div class="col-md-6 col-xs-6"><h4>{{SettingStoreOpenHours.saturdayFromDel}} - {{SettingStoreOpenHours.saturdayToDel}}</h4></div>
+                    <div class="col-md-3 col-xs-3">
+                    </div>
+                  </div>
+
+                  <div class="row  c53border" *ngIf="this.SettingStoreOpenHours.sundayDel">
+                    <div class="col-md-3 col-xs-3">
+                      <h4>Sunday</h4>
+                    </div>
+                    <div class="col-md-6 col-xs-6"><h4>{{SettingStoreOpenHours.sundayFromDel}} - {{SettingStoreOpenHours.sundayToDel}}</h4></div>
+                    <div class="col-md-3 col-xs-3">
+                    </div>
+                  </div>
+                </div> -->
+
+<!-- </form> -->
+<!-- </ng-template>
+          </ngb-tab> -->
+
+<!-- Reviews -->
+<!-- <ngb-tab title="Reviews">
+            <ng-template ngbTabContent> -->
+<!-- <form [formGroup]="Reviews"> -->
+
+<!-- </form> -->
+<!-- </ng-template>
+          </ngb-tab> -->
+<!-- Photos -->
+<!-- <ngb-tab title="Photos">
+            <ng-template ngbTabContent> -->
+<!-- <form [formGroup]="Photos"> -->
+
+<!-- </form> -->
+<!-- </ng-template>
+          </ngb-tab> -->
+
+<!-- Information -->
+<!-- <ngb-tab title="Information">
+            <ng-template ngbTabContent> -->
+<!-- <form [formGroup]="Information"> -->
+
+<!-- </form> -->
+<!-- </ng-template>
+          </ngb-tab> -->
+
+<!-- <ngb-tab>
+            <ng-template ngbTabTitle>Best Sellers</ng-template>
+            <ng-template ngbTabContent>
+              <div class="no-slider row">
+                <ng-container *ngFor="let product of products | slice:8:16">
+                  <div class="product-box">
+                    <app-product-box-one 
+                      [product]="product" 
+                      [currency]="productService?.Currency"
+                      [thumbnail]="true"
+                      [cartModal]="true">
+                    </app-product-box-one>
+                  </div>
+                </ng-container>
+              </div>
+            </ng-template>
+          </ngb-tab> -->
+<!-- </ngb-tabset>
+      </div>
+    </div>
+  </div>
+</section> -->
+<!-- Tab product End -->

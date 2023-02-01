@@ -1,0 +1,42 @@
+::ng-deep .mat-horizontal-stepper-header{
+    pointer-events: none !important;
+}
+
+.logo-medium {
+    width: auto;
+    padding-top: 10px;
+    height: 150px;
+}
+
+.banner {
+    img{
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        width:100%;
+        position: absolute;
+        z-index: -1;
+    }
+}
+
+.full-banner {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.banner-contain {
+    background-color: rgba(192,192,192,0.9);
+    border-style: outset;
+    border-width: 0.5px;
+    border-color: orange;
+    h4 {
+        color: white;
+    }
+
+    h5 {
+        color: white;
+    }
+    
+}
+
+
+

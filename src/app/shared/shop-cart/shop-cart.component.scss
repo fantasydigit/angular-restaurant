@@ -1,0 +1,66 @@
+
+.mat-badge-content {
+    background: #673AB7;
+    color: white;
+}
+
+/* Extra large devices (tablet, 1200px and up) */
+@media (min-width: 1200px) {
+    .backBtn {
+        display: none;
+    }
+}
+
+/* Extra large devices (tablet, 1200px and down) */
+@media (max-width: 1200px) {
+    .img-fluid {
+        margin-left: 20px;
+    }
+
+    .backBtn {
+        display: block;
+    }
+
+    .cartMobile {
+        padding: 0px 10px;
+    }
+
+    .label1 {
+        width: 40%;
+    }
+
+    .label2 {
+        width: 20%;
+    }
+    
+}
+.internalMatGrid{ min-width:100%;}
+
+.text-right{
+    margin-left: 20px;
+}
+
+.myGridList {
+    height: 200px;
+
+}
+
+.show-cart {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.td-data{
+    word-break: break-all;
+}
+
+.bottom{
+    border-bottom: 1pt solid black;
+}
+.top{
+    border-top: 1pt solid black;
+    border-bottom: 1pt solid black;
+}
+// mat-grid-list{
+//     height:200px;
+// }

@@ -1,0 +1,58 @@
+
+  <section class="p-0">
+    <!-- <div class="banner">
+      <img [src]="background" alt="">
+    </div> -->
+    
+    <div class="full-banner parallax-banner1 parallax text-center p-left" [ngStyle]="{'background-image': getUrl()}">
+      
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-center">
+                    <div class="banner-contain" >
+                        <img class="logo-medium" src={{logo}}>
+                        <br>
+                        <h4>{{shopName}}</h4>
+                        <br>
+  
+                        <br>
+                        <h5 *ngIf="merchantAddressString"><i class="fa fa-map-marker" aria-hidden="true"></i> {{merchantAddressString}}</h5>
+                        <br>
+                        <h5 *ngIf="tags"><i class="fa fa-list" aria-hidden="true"></i> {{tags}}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+  
+  
+  <mat-horizontal-stepper [linear]="true" #stepper>
+      <mat-step >
+        <form >
+          <ng-template matStepLabel>{{ "CREATE_YOUR_ORDER" | translate }}</ng-template>
+          <app-create-order></app-create-order>
+        </form>
+      </mat-step>
+  
+  
+      <mat-step >
+        <form >
+          <ng-template matStepLabel>{{ "PAYMENT_INFORMATION/CONFIRM_ORDER" | translate }}</ng-template>
+          <app-checkout></app-checkout>
+        </form>
+      </mat-step>
+  
+      
+      <!-- <mat-step>
+        <ng-template matStepLabel>Confirm Order</ng-template>
+        <p>Your order is processing</p>
+      </mat-step> -->
+  
+  
+      <!-- <mat-step>
+          <ng-template matStepLabel>Receipt</ng-template>
+          <app-success></app-success>
+        </mat-step> -->
+    </mat-horizontal-stepper>
+

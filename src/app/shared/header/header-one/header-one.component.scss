@@ -1,0 +1,21 @@
+.c53logo
+{
+	height: auto;
+	width: auto;
+	max-height: 60px;
+	max-width: 250px;
+}
+  
+/* Extra large devices (tablet, 577px and up) */
+@media (min-width: 577px) {
+	.shopCart-mobile {
+		display: none;
+	}
+}
+
+/* Extra small devices (phones, 577px and down) */
+@media (max-width: 577px) {
+	.shopCart {
+		display: none;
+	}
+}

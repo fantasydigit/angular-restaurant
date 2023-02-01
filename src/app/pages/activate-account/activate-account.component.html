@@ -1,0 +1,19 @@
+<app-breadcrumb [title]="'ACTIVATE_ACCOUNT'|translate" [breadcrumb]="'ACTIVATE_ACCOUNT'|translate"></app-breadcrumb>
+<!-- section start -->
+<section class="authentication-page section-b-space">
+   <div class="container">
+      <div class="col-sm-12 text-center">
+         <!-- <img src="assets/images/empty-search.jpg" class="img-fluid mb-4" /> -->
+         <h3>
+            {{ statusTitle | translate }}
+         </h3>
+         <p>
+            {{ statusDesc | translate }}
+         </p>
+         <a *ngIf="reqDone" [routerLink]="['/pages/login']" class="btn btn-solid">
+            {{ "GO_TO_LOGIN" | translate }}
+         </a>
+      </div>
+   </div>
+</section>
+<!-- section end -->

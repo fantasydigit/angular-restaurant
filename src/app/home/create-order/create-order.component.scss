@@ -1,0 +1,120 @@
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #88559A;
+  }
+
+.img-item {
+    width: 100%;
+    height: 200px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    object-fit: cover;
+}
+
+.mat-icon {
+    font-size: 20px;
+}
+
+.btn-icon {
+    width: 30px;
+    height: 30px;
+}
+
+.c53text
+{
+    font-weight: bold;
+}
+
+.c53move
+{
+    padding-bottom: 20px;
+    width: 70%;
+}
+.c53border{
+    border-top-style: groove;
+    width: 70%;
+    padding-top: 5px;
+
+}
+.c53bor
+{
+    padding-top: 40px;
+
+}
+.c53right
+{
+    padding-left: 20px;
+}
+
+// custom button
+
+.button {
+    background-color: transparent;
+    border-color: purple;
+    border-radius: 3px;
+    color: purple;
+    font-weight: 500;
+
+    &:hover {
+        transition: 0.3s;
+        background-color: purple;
+        border-radius: 3px;
+        color: white;
+    }
+}
+
+.soldout-button {
+    background-color: grey;
+    border-color: grey;
+    border-radius: 3px;
+    color: white;
+    font-weight: 500;
+}
+
+.category-title {
+    overflow: hidden; 
+}
+
+.category-title:after{
+    content:"";
+    display: inline-block;
+    height: 0.5em;
+    vertical-align: bottom;
+    width: 100%;
+    margin-right: -100%;
+    margin-left: 10px;
+    border-top: 1px solid #ff8200;
+    }
+
+// custom button
+
+/* Extra large devices (tablet, 1200px and down) */
+@media (max-width: 1200px) {
+
+    .category {
+        margin: 0 auto;
+        width: 50%;
+    }
+
+    .foods {
+        margin-top: 30px;
+    }
+
+    .delivery {
+        margin: 50px 0px;
+    }
+}
+
+/* Extra small devices (phones, 577px and down) */
+@media (max-width: 577px) {
+
+    .container-fluid {
+        padding: 0;
+    }
+
+    .menu-div {
+        margin: 0 auto;
+        width: 100%;
+        padding: 0;
+    }
+
+}

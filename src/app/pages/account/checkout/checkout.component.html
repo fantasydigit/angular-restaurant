@@ -1,0 +1,362 @@
+<!-- <app-breadcrumb [title]="'Checkout'" [breadcrumb]="'Checkout'"></app-breadcrumb> -->
+<!-- section start -->
+<section class="section-b-space">
+  <div class="container padding-cls">
+    <div class="checkout-page">
+      <div class="checkout-form">
+        <form>
+          <div class="row">
+
+            <!-- Delivery -->
+            <div *ngIf="checkoutPreference && checkoutPreference['pickUp'] === false" class="col-lg-6 col-sm-12 col-xs-12">
+              <div class="checkout-title">
+                <h3>{{ "DELIVERY_INFORMATION" | translate }}</h3>
+              </div>
+
+              <div class="row">
+                <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                  <span  *ngIf="checkoutPreference && checkoutPreference['pickUp'] === false">
+                    <h5> {{ "ORDER_RECEIVE_TYPE" | translate}}: <strong>{{ "DELIVERY" | translate }}</strong> </h5>
+
+                    <div *ngIf="checkoutPreference['preOrder'] === true; then thenBlock else elseBlock"></div>
+                      <ng-template #thenBlock>
+                        <h5> {{ "RECEIVE_ON_TYPE" | translate}}: <strong>{{ "PRE_ORDER" | translate }}</strong> </h5>
+                      </ng-template>
+                      <ng-template #elseBlock>
+                        <h5> {{ "RECEIVE_ON_TYPE" | translate}}: <strong>{{ "ORDER_NOW" | translate }}</strong> </h5>
+                      </ng-template>
+
+                    <span *ngIf="checkoutPreference && checkoutPreference['preOrder'] === true">
+                      <h5> {{ "PREORDER_TIME" | translate}}: <strong>{{ checkoutPreference['selectedDate'] | date:'MM/dd/yyyy hh:mm a' }}</strong> </h5>
+                    </span>
+                  </span>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="checkout-title">
+                  <h3>{{ "RECEIVER" | translate }}<span class="required">*</span></h3>
+                </div>
+                <form [formGroup]="receiverForm">
+                <div class="row">
+                  <div *ngIf="!auth.authenticated" class="form-group col-md-12 col-sm-12 col-xs-12">
+                    <input type="text" name="field-name" value="" formControlName="firstname" placeholder="First Name">
+                    <small *ngIf="receiverForm.hasError('required', 'firstname') && receiverForm.controls['firstname']?.touched"
+                    style="color: red;"> 
+                      {{ "REQUIRED" | translate }}
+                    </small>
+                  </div>
+                  <div class="form-group phonePrefix" style="padding-right:0%;">
+                    <select formControlName="phonePrefix">
+                      <option *ngFor="let prefix of phonePrefix" [value]="prefix.prefix">{{prefix.prefix}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group col" style="padding-left:0%;">
+                    <input type="number" name="field-name" value="" formControlName="receiverPhone" placeholder="Mobile Number">
+                    <small>{{ "EXAMPLE" | translate }}, 60123456789</small>
+                    <br>
+                    <small *ngIf="receiverForm.hasError('required', 'receiverPhone') && receiverForm.controls['receiverPhone']?.touched"
+                    style="color: red;"> 
+                      {{ "REQUIRED" | translate }}
+                    </small>
+                  </div>
+                  
+                  <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                    <input type="email" name="field-name" value="" formControlName="receiverEmail" placeholder="Email Address">
+                    <small *ngIf="receiverForm.hasError('required', 'receiverEmail') && receiverForm.controls['receiverEmail']?.touched"
+                    style="color: red;"> 
+                      {{ "REQUIRED" | translate }}
+                    </small>
+                    <small *ngIf="receiverForm.hasError('email','receiverEmail') && receiverForm.controls['receiverEmail']?.touched"
+                    style="color: red;"> 
+                      {{ "INVALID_EMAIL_FORMAT" | translate }}
+                    </small>
+                  </div>
+                </div>
+              </form>
+              </div>
+
+              <div class="checkout-title">
+                <h3>{{ "ADDRESS_INFORMATION" | translate }}<span class="required">*</span></h3>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                  <div class="row">
+                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                      <h5>1.{{ "PLEASE_ADDRESS" | translate }}</h5>
+                      <label>*{{ "SEARCH_ADDRESS" | translate }}</label>
+                      <br>
+                      <h5>2.{{ "PLEASE_CLICK" | translate }}</h5>
+                    </div>
+                  </div>
+                    <input type="text" (change)="placeOrderDisable = true" (keydown.enter)="$event.preventDefault()" 
+                  placeholder="Search Nearest Location" autocorrect="off" autocapitalize="off" spellcheck="off" #search>              
+                  <br>
+                  <br>
+                  <!-- <agm-map [latitude]="latitude" [longitude]="longitude">
+                    <agm-marker [latitude]="latitude" [longitude]="longitude"
+                    [markerDraggable]="true"
+                    (dragEnd)="markerDragEnd($event)"></agm-marker>
+                  </agm-map> -->
+
+                  <agm-map
+                  style="width: 100%; height: 50vh;"
+                  [latitude]="defaultLatitude"
+                  [longitude]="defaultLongitude"
+                  [zoom]="14"
+                  (centerChange)="onAddressMapCenterChange($event)"
+                >
+                  <agm-marker
+                    [latitude]="latitude"
+                    [longitude]="longitude"
+                  >
+                  <!-- <agm-marker  *ngFor="let data of latlng; let i = index" [latitude]="data.lat" [longitude]="data.long"> -->
+                    <!-- <agm-info-window>
+                      <strong>
+                        EXACT LOCATION
+                      </strong>
+                    </agm-info-window> -->
+                  </agm-marker>
+                </agm-map>
+                <small>*{{ "DELIVERY_ONLY_AVAILABLE_WITHIN" | translate }} {{distanceCoverKM}}{{ "KM_FROM_THIS_MERCHANT" | translate }}</small>
+                <br>
+                <br>
+                <div [formGroup]="addressForm">
+                  <div class="row">
+                    <div class="col-md">
+                      <input (change)="placeOrderDisable = true" type="text" formControlName="house" name="field-name" value="" placeholder="Lot/House No.">
+                      <span *ngIf="dispErrorHolder('addressForm', 'house')" style="color: white;">-</span>
+                      <small *ngIf="dispError('addressForm', 'house', 'required')" style="color: red;">{{ "REQUIRED" | translate }}</small>
+                    </div>
+
+                    <div class="col-md">
+                      <input type="text" formControlName="postcode" name="field-name" value="" placeholder="Postcode">
+                      <span *ngIf="dispErrorHolder('addressForm', 'postcode')" style="color: white;">-</span>
+                      <small *ngIf="dispError('addressForm', 'postcode', 'required')" style="color: red;">{{ "REQUIRED" | translate }}</small>
+                      <small *ngIf="dispError('addressForm', 'postcode', 'pattern')" style="color: red;">{{ "INVALID_PATTERN" | translate }}</small>
+                      <small *ngIf="dispError('addressForm', 'postcode', 'minlength')" style="color: red;">{{ "INVALID_MINLENGTH" | translate }} 5</small>
+                      <small *ngIf="dispError('addressForm', 'postcode', 'maxlength')" style="color: red;">{{ "INVALID_MAXLENGTH" | translate }} 5</small>
+                    </div>
+                  </div>
+
+                  <input type="text" name="field-name" formControlName="street" placeholder="Street" style="margin-top: 22px;">
+                  <small *ngIf="dispError('addressForm', 'street', 'required')" style="color: red;">{{ "REQUIRED" | translate }}</small>
+                  <br>
+                  <br>
+                  <input type="text" name="field-name" formControlName="city" placeholder="City">
+                  <br>
+                  <br>
+                  <input type="text" name="field-name" formControlName="state" placeholder="State">
+                  <br>
+                  <br>
+                  <button mat-raised-button color="primary" (click)="updateAddress()">
+                    {{ "CONFIRM_ADDRESS" | translate }}
+                  </button>
+                </div>               
+                </div>
+              </div>
+            </div>
+            <!-- Delivery -->
+
+
+            <!-- Pickup -->
+            <div *ngIf="checkoutPreference && checkoutPreference['pickUp'] == true" class="col-lg-6 col-sm-12 col-xs-12">
+              <div class="checkout-title">
+                <h3>{{ "PICKUP_INFORMATION" | translate }}</h3>
+              </div>
+
+
+              <div class="row">
+                <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                  <span  *ngIf="checkoutPreference && checkoutPreference['pickUp'] === true">
+                    <h5> {{ "ORDER_RECEIVE_TYPE" | translate}}: <strong>{{ "PICKUP" | translate }}</strong> </h5>
+
+                    <div *ngIf="checkoutPreference['preOrder'] === true; then thenBlock else elseBlock"></div>
+                      <ng-template #thenBlock>
+                        <h5> {{ "RECEIVE_ON_TYPE" | translate}}: <strong>{{ "PRE_ORDER" | translate }}</strong> </h5>
+                      </ng-template>
+                      <ng-template #elseBlock>
+                        <h5> {{ "RECEIVE_ON_TYPE" | translate}}: <strong>{{ "ORDER_NOW" | translate }}</strong> </h5>
+                      </ng-template>
+
+                    <span *ngIf="checkoutPreference && checkoutPreference['preOrder'] === true">
+                      <h5> {{ "PREORDER_TIME" | translate}}: <strong>{{ checkoutPreference['selectedDate'] | date:'MM/dd/yyyy hh:mm a' }}</strong> </h5>
+                    </span>
+                  </span>
+                </div>
+              </div>
+
+
+
+              <div>
+                <div class="checkout-title">
+                  <h3>{{ "RECEIVER" | translate }}<span class="required">*</span></h3>
+                </div>
+                <form [formGroup]="receiverForm">
+                <div class="row">
+                  <div *ngIf="!auth.authenticated" class="form-group col-md-12 col-sm-12 col-xs-12">
+                    <input type="text" name="field-name" value="" formControlName="firstname" placeholder="First Name">
+                    <small *ngIf="receiverForm.hasError('required', 'firstname') && receiverForm.controls['firstname']?.touched"
+                    style="color: red;"> 
+                      {{ "REQUIRED" | translate }}
+                    </small>
+                  </div>
+                  <div class="form-group phonePrefix" style="padding-right:0%;">
+                    <select formControlName="phonePrefix">
+                      <option *ngFor="let prefix of phonePrefix" [value]="prefix.prefix">{{prefix.prefix}}</option>
+                    </select>
+                  </div>
+                  
+                  <div class="form-group col" style="padding-left:0%;">
+                    <input type="number" name="field-name" value="" formControlName="receiverPhone" placeholder="Mobile Number">
+                    <small>{{ "EXAMPLE" | translate }}, 60123456789</small>
+                    <br>
+                    <small *ngIf="receiverForm.hasError('required', 'receiverPhone') && receiverForm.controls['receiverPhone']?.touched"
+                    style="color: red;"> 
+                      {{ "REQUIRED" | translate }}
+                    </small>
+                  </div>
+                  
+                  <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                    <input type="email" name="field-name" value="" formControlName="receiverEmail" placeholder="Email Address">
+                    <small *ngIf="receiverForm.hasError('required', 'receiverEmail') && receiverForm.controls['receiverEmail']?.touched"
+                    style="color: red;"> 
+                      {{ "REQUIRED" | translate }}
+                    </small>
+                    <small *ngIf="receiverForm.hasError('email','receiverEmail') && receiverForm.controls['receiverEmail']?.touched"
+                    style="color: red;"> 
+                      {{ "INVALID_EMAIL_FORMAT" | translate }}
+                    </small>
+                    
+                  </div>
+                  
+                </div>
+              </form>
+              </div>
+
+            </div>
+            <!-- Pickup -->
+
+            <div class="col-lg-6 col-sm-12 col-xs-12">
+              <div class="checkout-details">
+                <div class="order-box">
+                  <div class="title-box">
+                    <div>{{ "PRODUCT" | translate }} <span> {{ "TOTAL" | translate }}</span></div>
+                  </div>
+                  <ul class="qty" *ngFor="let item of foodItem">
+                    <li>{{item.itemName}} x{{item.quantity}} <span>{{item.totalPrice | currency:"RM"}}</span>
+                    </li>
+                    <li *ngIf="item['addon'].length > 0" style="font-weight: bold;">{{ "ADDON" | translate }}:</li>
+                    <div *ngFor="let addon of item['addon']">
+                      <li>{{addon.addonName}} x{{addon.quantity}} <span>{{addon.totalPrice | currency:"RM"}}</span>
+                    </div>
+                  </ul>
+                  <ul class="sub-total">
+                    <li>{{ "SUBTOTAL" | translate }} <span class="count" *ngIf="cart">{{cart['subTotal'] | currency:"RM"}}</span></li>
+                    <li>{{ "PACKAGING_CHARGE" | translate }} <span class="count" *ngIf="cart">{{cart['packagingCost'] | currency:"RM"}}</span></li>
+                    <li *ngIf="checkoutPreference && checkoutPreference['pickUp'] == false">{{ "DELIVERY_CHARGE" | translate }} 
+                      <span class="count" *ngIf="!deliveryChargeError && isFreeDelivery == false">{{deliveryCharge | currency:'RM'}}</span>
+                      <span class="count" *ngIf="!deliveryChargeError && isFreeDelivery == true">{{0.00 | currency:'RM'}}</span>
+                      <span class="count" *ngIf="deliveryChargeError">{{ "NO_DELIVERY_AVAILABLE" | translate }}</span>
+                    <br><small *ngIf="checkoutPreference && checkoutPreference['pickUp'] == false">*{{ "UPDATE_ADDRESS_TO_GET_DELIVERY_CHARGE" | translate }}</small>
+                    <div *ngIf="checkoutPreference['pickUp'] == false && isFreeDelivery == true">
+                      <small>*{{ "FREE_DELIVER" | translate}}</small>
+                    </div>
+                    <div *ngIf="!isCarDelivery">
+                      <small>*{{ "MOTOR_DELIVERY_PROVIDED" | translate}}</small>
+                    </div>
+                    <div *ngIf="isCarDelivery">
+                      <small>*{{ "CAR_DELIVERY_PROVIDED" | translate}}</small>
+                    </div>
+                    
+                  </li>
+                    
+                    
+                  </ul>
+
+                  <ul class="total">
+                    <li>{{ "TOTAL" | translate }} <span class="count" *ngIf="cart">{{cart['grandTotal'] | currency:"RM"}}</span></li>
+                  </ul>
+                </div>
+
+                <div class="payment-box">
+                  <div class="upper-box">
+                    <h4><strong>{{ "PAYMENT_TYPE" | translate }}</strong></h4>
+                    <div class="payment-options">
+                      <mat-radio-group aria-label="Select an option" color="primary" [(ngModel)]="paymentType" [ngModelOptions]="{standalone: true}">
+                        <mat-radio-button value="payStack">PayStack</mat-radio-button>
+                      </mat-radio-group>
+                      
+                      <form ngNoForm #form action="https://uat.kiplepay.com/wcgatewayinit.php" method="post">
+                        <input type="hidden" name="ord_date" [value]="todayDate">
+                        <input type="hidden" *ngIf="cart" name="ord_totalamt" [value]="cart['grandTotal']"/>
+                        <!-- <input type="hidden" *ngIf="cart" name="ord_totalamt" value="1.00"/> -->
+                        <input type="hidden" name="ord_gstamt" value="0.00" />
+                        <input type="hidden" *ngIf="username" name="ord_shipname" [value]="username">
+                        <input type="hidden" name="ord_shipcountry" value="Malaysia">
+                        <input type="hidden" *ngIf="orderId" name="ord_mercref" [value]="orderId">
+                        <input type="hidden" *ngIf="checkoutPreference" name="ord_telephone" [value]="receiverPhoneWithoutPlus">
+                        <input type="hidden" *ngIf="checkoutPreference" name="ord_email" [value]="checkoutPreference['receiverEmail']">
+                        <input type="hidden" *ngIf="deliveryCharge && !isFreeDelivery" name="ord_delcharges" [value]="deliveryCharge">
+                        
+                        <!-- free delivery -->
+                        <input type="hidden" *ngIf="isFreeDelivery" name="ord_delcharges" value="0.00">
+                        <input type="hidden" *ngIf="isFreeDelivery" name="ord_customfield1" [value]="deliveryCharge">
+                        <!-- free delivery -->
+
+                        <input type="hidden" name="ord_svccharges" value="0.00">
+                        <input type="hidden" *ngIf="kipleMerchantId" name="ord_mercID" [value]="kipleMerchantId">
+                        <input type="hidden" *ngIf="merchantHash" name="merchant_hashvalue" [value]="merchantHash">
+                        <input type="hidden" name="version" [value]="2.0">
+                        <input type="hidden" *ngIf="returnUrl" name="ord_returnURL" [value]="returnUrl">
+                        <!-- <button type="submit" name="formSubmit" value="Pay with kiplePay"></button> -->
+                      </form>
+                      
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-around">
+                    <button mat-raised-button
+                    color="primary"
+                    style="background-color:#ff8200; color: white;"
+                    matStepperPrevious
+                    >
+                    {{ "GO_BACK_ORDER" | translate }}
+                    </button>
+
+                    <button mat-raised-button
+                    *ngIf="checkoutPreference && !checkoutPreference['pickUp']"
+                    color="primary"
+                    [disabled]="!validateEntry() || placeOrderDisable || receiverForm.invalid || addressForm.invalid || !canOrder"
+                    (click)="placeOrder()"
+                    >
+                    {{ "PLACE_ORDER" | translate }}
+                    </button>
+
+                    <button mat-raised-button
+                    *ngIf="checkoutPreference && checkoutPreference['pickUp'] "
+                    color="primary"
+                    [disabled]="!validateEntry() || !canOrder"
+                    (click)="placeOrder()"
+                    >
+                    {{ "PLACE_ORDER" | translate }}
+                    </button>
+
+                  </div>
+                  <!-- <div class="text-right">
+                    <a (click)="placeOrder()" class="btn-solid btn">Place Order</a>
+                  </div> -->
+                </div>
+                <br>
+                <small *ngIf=!validateEntry() style="color: red;">*{{ "PLEASE_PHONE" | translate }}</small>
+                <br>
+                <small *ngIf="checkoutPreference && checkoutPreference['pickUp'] == false" style="color: red;">*{{ "PLEASE_DOUBLE_CHECK_YOUR_ADDRESS_BEFORE_PLACE_ORDER" | translate }}</small>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- section End -->

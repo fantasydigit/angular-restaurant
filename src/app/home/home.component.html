@@ -1,0 +1,149 @@
+<!-- <app-header-one [themeLogo]="themeLogo"></app-header-one> -->
+
+<ngb-alert *ngIf="infoMsg" type="info" (close)="infoMsg = null" style="margin-bottom: 0;">
+    {{ infoMsg }}
+</ngb-alert>
+
+<section class="p-0">
+    <div class="full-banner parallax-banner1 parallax text-center p-left"
+        [ngStyle]="{ 'background-image': 'url(assets/images/bg.jpg)' }">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-center">
+                    <div class="banner-contain">
+                        <h3 style="color: white">
+                            {{ "SEARCH_RESTAURANT" | translate }}
+                        </h3>
+                        <br />
+                        <form class="form-header" style="outline-offset: 1px">
+                            <div class="form-group">
+                                <input type="search" class="form-control" [(ngModel)]="searchValue"
+                                    [ngModelOptions]="{ standalone: true }" placeholder="{{ 'Enter Restaurant Name' | translate }}" />
+                                <button type="submit" (click)="submitSearch()" class="btn btn-primary">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- <div class="col">
+                            <mat-form-field appearance="fill" class="searchCat">
+                                <mat-label>Halal</mat-label>
+                                <mat-select [(ngModel)]="filter1" name="food">
+                                    <mat-option *ngFor="let tag of halalNonHalal" [value]="tag">
+                                        {{tag}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+        
+                            <mat-form-field appearance="fill" class="searchCat">
+                                <mat-label>Categories</mat-label>
+                                <mat-select [(ngModel)]="filter2" name="food">
+                                    <mat-option *ngFor="let tag of merchantCategories" [value]="tag">
+                                        {{tag}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                        </div> -->
+                        <!-- <div>
+                            <div>
+                                <button type="button" (click)="search()" class="btn btn-primary" >
+                                    <i class="fa fa-search"></i>
+                                </button> 
+                            </div>
+                            
+                            <div style="padding-top: 5px;">
+                                <button type="button" (click)="resetFilter()" class="btn btn-danger" >
+                                    {{ "RESET" | translate}}
+                                </button> 
+                            </div>
+                        </div> -->
+
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Put top featured merchant logo here in the future -->
+<!-- <section class="section-b-space">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <app-logo [logos]="logos"></app-logo>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+<section class="section-b-space">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="title4">
+                    <h2 class="title-inner4">{{ "RESTAURANTS" | translate }}</h2>
+                    <div class="line">
+                        <span></span>
+                    </div>
+                </div>
+                <!-- <div class="title4">
+                    <mat-form-field appearance="fill"  style="padding-right: 5px;">
+                        <mat-label>Halal</mat-label>
+                        <mat-select [(ngModel)]="filter1" name="food">
+                            <mat-option *ngFor="let tag of halalNonHalal" [value]="tag">
+                                {{tag}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Categories</mat-label>
+                        <mat-select [(ngModel)]="filter2" name="food">
+                            <mat-option *ngFor="let tag of merchantCategories" [value]="tag">
+                                {{tag}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    
+                </div>
+
+                <div class="title4">
+                    <div class="title-inner4">
+                        <div>
+                            <button type="button" (click)="search()" class="btn btn-primary" >
+                                <i class="fa fa-search"></i>
+                            </button> 
+                        </div>
+                        
+                        <div style="padding-top: 5px;">
+                            <button type="button" (click)="resetFilter()" class="btn btn-danger" >
+                                {{ "RESET" | translate}}
+                            </button> 
+                        </div>
+                        
+                    </div>
+                </div> -->
+                
+                <div *ngFor="let cat of diffCatsMerchant">
+                    <div class="title4">
+                        <h2 class="title-inner4">{{cat.tag}}</h2>
+                    </div>
+                    <app-collection [categories]="cat.categories" [category]="'watch'"></app-collection>
+                    <br>
+                    <br>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Useful in future improvement -->
+<!-- <div class="container section-t-space">
+    <section class="service border-section small-section">
+        <app-services></app-services>
+    </section>
+</div> -->

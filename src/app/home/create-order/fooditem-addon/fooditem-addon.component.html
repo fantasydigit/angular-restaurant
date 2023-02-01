@@ -1,0 +1,260 @@
+<h5 mat-dialog-title>{{ "ITEM_DETAILS" | translate }}</h5>
+
+<!-- <div class="container"> -->
+    <form [formGroup]="itemCart">
+        <mat-dialog-content>
+    <div class="row">
+        <div>
+            <!-- img -->
+            <img class="logo-medium" src={{food_image}} style="padding-bottom: 10px;">
+        </div>
+        <div class="col-sm" style="padding-left: 15px; font-weight: bold;">
+            <!-- item name -->
+            <h3 *ngIf="currentLanguage === 'en'">{{item_name}}</h3>
+            <h3 *ngIf="currentLanguage === 'ch'">{{item_name_ch}}</h3>
+            <h3 *ngIf="currentLanguage === 'bm'">{{item_name_bm}}</h3>
+            <div class="row" style="padding-left: 15px;">
+                <div class="grid" >
+                    <div class="row" style="padding-left: 15px; font-weight: bold;">
+                        <label>{{"DESCRIPTION" | translate}}</label>
+                    </div>
+                    <div class="row" style="padding-left: 15px;">
+                        <label *ngIf="currentLanguage === 'en'">{{desc}}</label>
+                        <label *ngIf="currentLanguage === 'ch'">{{desc_ch}}</label>
+                        <label *ngIf="currentLanguage === 'bm'">{{desc_bm}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr style="width:100%;text-align:left;margin-left:0">
+    <!-- Display Price -->
+    <div class="row">
+        <div class="col-md-12">
+            <h6>{{ "PRICE" | translate }}</h6>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <!-- <div class="row" *ngFor="
+            let group of generalFoodSize.controls;
+            
+            "
+            > -->
+            <div class="col-md-6">
+                <!-- <mat-checkbox formControlName="checked" (change)="totalPrice()">
+                {{
+                    getFoodSizeLabelForEnglishId(group.get("id").value)
+                }}
+                </mat-checkbox> -->
+                <mat-radio-group formControlName="foodSizes" color="primary">
+                    <mat-radio-button *ngFor="let group of foodSize" [value]="group" [checked]="group['en'].id == itemCart.controls['foodSizes'].value['en'].id">
+                    {{
+                        group[currentLanguage].sizeName
+                    }} ({{group['foodSizeGeneralDTO'].price | currency: "RM"}})
+                    </mat-radio-button>
+                </mat-radio-group>
+            <!-- </div> -->
+    
+            <!-- <div class="col-md-6">
+                <label>RM {{group.get("price").value}}</label>
+            </div> -->
+        </div>
+        <small style="color: red;" *ngIf="sizeNotSelected">{{ "PLEASE_SELECT_ONE" | translate }}</small>
+            
+        </div>
+        <!-- <div class="col-md-6">
+            <button mat-raised-button color="primary" (click)="openIntruction()">{{ "ADD_INSTRUCTION" | translate }}</button>
+        </div> -->
+    </div>
+
+
+
+    <!-- <div class="row">
+        <div class="col-md-6">
+            <label>RM {{itemCartPrice}}</label>
+        </div>
+        <div class="col-md-6">
+            <button mat-raised-button color="primary" (click)="openIntruction()">Add Instruction</button>
+        </div>
+    </div> -->
+    <br>
+    <div class="row" *ngIf="showInstruction">
+        <div class="col-md-12">
+            <textarea matInput appearance="outline" style="width: 300px;" placeholder="{{ 'Enter Instruction Here' | translate }}" formControlName="instruction"></textarea>
+        </div>
+    </div>
+    <hr style="width:100%;text-align:left;margin-left:0">
+    <div class="row">
+        <div class="col-md-12">
+            <h6>{{ "QUANTITY" | translate }}</h6>
+        </div>
+        <div class="col-md-12">
+            <!-- quantity -->
+            <input matInput type="number" step="1" min="1" formControlName="quantity" (change)="totalPrice()">
+        </div>
+    </div>
+    <hr style="width:100%;text-align:left;margin-left:0">
+    <div class="row">
+        <div class="col">
+            <h6>{{ "ADDONS" | translate }}</h6>
+        </div>
+        <div class="col-4">
+        </div>
+        <div class="col priceTag1">
+            <div class="priceTag2">
+                <h6>{{ "UNIT_PRICE" | translate }}</h6>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row" *ngFor="let addItem of addonItems">
+        <div class="col-md-5">
+            checkbox with name
+            <mat-checkbox>
+                {{addItem['en'].addonItemName}}
+            </mat-checkbox>
+
+        </div>
+        <div class="col-md-4">
+            addon quantity
+            <input matInput style="width: 100px;" type="number" step="1" min="1" [(ngModel)]='quantity' [ngModelOptions]="{standalone: true}" (change)="addItemQuantity()">
+        </div>
+        <div class="col-md-3">
+            price addon
+            RM {{addItem['general'].price}}
+        </div>
+    </div> -->
+    <div class="item-category" *ngFor="let category of categoryFilterLang">
+        <h4 class="category-title" >
+          {{ category.addonCategoryName }}
+        </h4>
+        
+        <div formArrayName="addonItems" class="myAddOns">
+            <div *ngFor="
+            let group of generalAddonItems.controls;
+            let i = index
+            "
+            [formGroupName]="i"
+            >
+                <div *ngIf="identifyFoodAddOnCategory(group.get('defaultCategoryLangId').value ,category)">
+                    <div *ngIf = "group.hasError('required')" class="category-title" style="margin-bottom: 5px;">
+                        <!-- <span style="color: black; font-weight: bold;" > 
+                            {{ category.addonCategoryName }} Category 
+                        </span> -->
+                        <small class="small-required">*{{ "THIS_CAT_REQUIRED" | translate}}</small>
+                    </div>
+
+                    <!-- <div *ngIf = "group.errors && group.hasError('required') == false;" class="category-title" style="margin-bottom: 5px;">
+                        <span style="color: black; font-weight: bold;" > 
+                            {{ category.addonCategoryName }} Category 
+                        </span>
+                    </div> -->
+                    
+                    
+                    
+                    <div class="row" style="align-items: center;">
+                        <div class="col" *ngIf="isSingleCategory(group,category); else isMultipleCategory">
+                            <div *ngIf = "group.value['checked'] else notCheckedRadio">
+                                <mat-radio-button 
+                                [name]="group.get('defaultCategoryLangId').value" 
+                                [id]="group.get('id').value" 
+                                value="true" 
+                                (change)="onRadioChange($event,group)"
+                                (click)="removeValue($event,group)"
+                                [checked]="true"
+                                color="primary"
+                               >
+                               <span class="wrap-mat-radio-label">
+                                {{ getAddonItemLabelForLanguageId(group.get("id").value) }}
+                                </span>
+                                </mat-radio-button>
+                            </div>
+                            <ng-template #notCheckedRadio>
+                                <div>
+                                    <mat-radio-button 
+                                    [name]="group.get('defaultCategoryLangId').value" 
+                                    [id]="group.get('id').value" 
+                                    value="true" 
+                                    (change)="onRadioChange($event,group)"
+                                    color="primary"
+                                   >
+                                   <span class="wrap-mat-radio-label">
+                                    {{ getAddonItemLabelForLanguageId(group.get("id").value) }}
+                                    </span>
+                                   
+                                    </mat-radio-button>
+                                </div>
+                                
+                            </ng-template>
+                            
+
+                            <!-- <input type="radio" 
+                            [name]="group.get('defaultCategoryLangId').value" 
+                            [id]="group.get('id').value" 
+                            value="true" 
+                            (input)="onRadioChange($event,group)"
+                            style="display: inline-block;
+                            height: 16px;
+                            line-height: 0;
+                            margin: auto;
+                            margin-right: 8px;
+                            order: 0;
+                            position: relative;
+                            vertical-align: middle;
+                            white-space: nowrap;
+                            width: 16px;
+                            flex-shrink: 0;">
+                            <label style="margin-bottom: 8px;" [id]="group.get('id').value" >{{ getAddonItemLabelForLanguageId(group.get("id").value) }}</label> -->
+                        </div>
+
+                        <ng-template #isMultipleCategory>
+                            <div class="col" *ngIf="category">
+                                <mat-checkbox formControlName="checked" color="primary">
+                                    <span class="wrap-mat-radio-label">
+                                        {{ getAddonItemLabelForLanguageId(group.get("id").value) }}
+                                    </span>
+                                </mat-checkbox>
+                            </div>
+                        </ng-template>
+                        
+    
+                        <div class="row col-2" style="align-items: center; justify-content: center; margin-bottom: 7px;" >
+                            <div *ngIf="group.get('allowQuantity').value">
+                                <button color="primary" [disabled]="!group.get('checked').value" mat-icon-button (click)="minusQuantity(group)"><mat-icon class="myQuantity">remove</mat-icon></button>
+                            </div>
+                            <span class="myQuantity">
+                                {{ getValueFormArray('generalAddonItems', i, 'quantity') }}
+                            </span>
+                            <input matInput style="display: none;" type="number" step="1" min="1" formControlName="quantity" (change)="calculateAddonTotalPrice(group)" class="myQuantity">
+                            <div  *ngIf="group.get('allowQuantity').value">
+                                <button color="primary" [disabled]="!group.get('checked').value" mat-icon-button (click)="addQuantity(group)"><mat-icon class="myQuantity">add</mat-icon></button>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4" style="text-align: center;">
+                            <div *ngIf ="group.get('price').value == null"  >
+                                <label>RM0.00</label>
+                            </div>
+                            <div *ngIf ="group.get('price').value != null">
+                                <label>{{group.get("price").value | currency:"RM"}}</label>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <hr style="width:100%;text-align:left;margin-left:0">
+    <div class="row">
+        <div class="col-sm ">
+            <!-- <button mat-raised-button color="primary" [mat-dialog-close]="itemCart.value">ADD CART</button> -->
+            <button mat-raised-button color="primary" (click)="save()">{{ "ADD_To_CART" | translate }}</button>
+            <button mat-raised-button color mat-dialog-close="close" style="margin-left: 7px;">{{ "CLOSE" | translate }}</button>
+        </div>
+    </div>
+</mat-dialog-actions>
+</form>
+<!-- </div> -->

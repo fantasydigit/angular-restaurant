@@ -1,0 +1,97 @@
+<app-header-one [sticky]="true"></app-header-one>
+
+<!-- Parallax banner start-->
+  <section class="p-0">
+    <div class="full-banner parallax-banner1 parallax text-center p-left" [ngStyle]="{'background-image': 'url(assets/images/bg.jpg)'}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-center">
+                    <div class="banner-contain">
+                        <h3 style="color: white;">{{ "SEARCH_RESTAURANT" | translate }}</h3>
+                        <br>
+                        <!-- <mat-form-field class="example-form-field">
+                            <mat-label>Clearable input</mat-label>
+                            <input matInput type="text">
+                            <button mat-button (click)="submitSearch()">
+                              <mat-icon>close</mat-icon>
+                            </button>
+                          </mat-form-field> -->
+                                  <form class="form-header" style="outline-offset: 1px;">
+                                    <div class="form-group">
+                                      <input type="search" class="form-control" [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}" id="exampleInputPassword1" placeholder="Enter address, city, state">
+                                      <button type="submit" (click)="submitSearch()" class="btn btn-primary flaot-right"><i class="fa fa-search"></i></button>
+                                    </div>     
+                                  </form>
+                                  <!-- <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search for...">
+                                    <div class="btn-input-search d-flex justify-content-end">
+                                      <button class="btn btn-default" type="submit">
+                                          <i class="fa fa-search"></i>
+                                      </button>
+                                    </div>
+                                  </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+  <!-- Parallax banner End -->
+<!-- <img class="logo-medium" src="https://orderkawkawtest.s3.ap-southeast-1.amazonaws.com/logo/kfc/KFC.png"> -->
+  <!-- Tab product start-->
+<div class="title1 section-t-space">
+    <h2 class="title-inner1">{{ "FEATURED_RESTAURANT" | translate }}</h2>
+  </div>
+  <section class="section-b-space p-t-0">
+    <!-- <div class="container">
+      <div class="row">
+        <div class="col-md-3 d-flex justify-content-center" *ngFor="let merchant of merchants">
+            <a href="#">
+            <div class="row list-item-logo">
+                
+                <img class="logo-medium" src={{merchant.merchantLogo}}>
+            </div>
+            <div class="row d-flex justify-content-center">
+                <h4>{{merchant.shopName}}</h4> 
+
+            </div>
+            </a>
+        </div>
+
+
+        </div>
+    </div> -->
+  </section>
+  <!-- Tab product End -->
+
+  <!-- <section class="section-b-space" style="margin: 20%; margin-top: 0%;">
+    <div class="title1 section-t-space">
+    <h2 class="title-inner1">Featured Restaurant</h2>
+  </div>
+    <div class="collection-content col">
+        <div class="page-main-content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="collection-product-wrapper" id="products">
+                        <div class="product-wrapper-grid" [ngClass]="layoutView">
+                            <div class="row">
+                                <div class="col-grid-box" [ngClass]="grid" *ngFor="let product of products">
+                                    <div class="product-box product-wrap">
+                                        <app-product-box-two [product]="product" [currency]="productService?.Currency">
+                                        </app-product-box-two>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 text-center section-b-space mt-5 no-found" *ngIf="!products.length">
+                                    <img src="assets/images/empty-search.jpg" class="img-fluid mb-4">
+                                    <h3>Sorry! Couldn't find the product you were looking For!!! </h3>
+                                    <p>Please check if you have misspelt something or try searching with other words.</p>
+                                    <a [routerLink]="['/shop/collection/left/sidebar']" class="btn btn-solid">continue shopping</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> -->
